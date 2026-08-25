@@ -1,27 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Website</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
-        }
-        h1 {
-            color: #333;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Browser tab title -->
+<title>Robot Sumo Simulation — Senior Design</title>
+
+<!-- Browser tab icon -->
+<link rel="icon" type="image/png" href="RS_Logo_Final.png">
+
+<!-- Imported Google Fonts: Anton (headings) and Inter (other text) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<!-- Style for Website: CSS rules -->
+<style>
+
+/* Color variables */
+:root {
+  --bg-black:      #000000;   /* website background (black) */
+  --header-blue:   #BFE1F5;   /* light-blue for header/footer bars and tables */
+  --accent-red:    #FF4141;   /* red table border */
+  --cell-white:    #FFFFFF;   /* table background (white) */
+  --text-black:    #000000;   /* black text for light backgrounds */
+  --text-white:    #FFFFFF;   /* white text for dark backgrounds */
+
+  /* Fonts used */
+  --font-display: 'Anton', 'Arial Narrow Bold', sans-serif; /* title text */
+  --font-body:    'Inter', Arial, Helvetica, sans-serif;    /* body text */
+}
+
+/* Base page styling: sets background and fonts */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-black);
+  color: var(--text-white);
+  font-family: var(--font-body);
+}
+
+
+/* ------------ Website Header ------------- */
+
+/* Sets light-blue bar at the top of the page. */ 
+.topbar {
+  background: var(--header-blue);
+  padding: 24px clamp(16px, 4vw, 48px);  /* allows elements to scale dynamically based on screen size */
+}
+
+/* Centers the header contents and spaces the logo/title and button elements */
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;     /* pushes the button to the far right */
+  gap: 15px;
+  max-width: 1300px;   
+  margin: 0 auto;
+}
+
+/* Groups the logo and title together */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* "What is Robot Sumo?" button in the header bar */
+.header-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 17px;                     /* button text size */
+  color: var(--text-white);
+  background: var(--accent-red);
+  border: 2px solid var(--text-black);
+  border-radius: 4px;       
+  padding: 20px 25px;                  /* button size and padding */
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Hover effect for buttons */
+.header-btn:hover {
+  background: var(--cell-white);
+  color: var(--text-black);
+  border-color: var(--accent-black);
+}
+
+/* Logo sizing */
+.logo {
+  width: 130px;         
+  height: 130px;
+  flex-shrink: 0;
+  margin: -27px 0;
+}
+
+/* Project title text */
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;    
+  color: var(--text-black);
+  font-size: clamp(14px, 3vw, 44px); 
+  line-height: 1.05;
+  letter-spacing: 0.5px;
+  margin: 0;
+  white-space: nowrap;              /* forces title to stay on a single line */
+}
+
+
+/* ------------ Basic Page Layout ------------- */
+
+/* Main content column: centers everything, sets the max width for tables */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px clamp(16px, 4vw, 48px) 64px;
+}
+
+/* Vertical space set between tables */
+.block {
+  margin-bottom: 60px; 
+}
+.block:last-child {
+  margin-bottom: 0;
+}
+
+/* Section heading text style */
+.section-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 25px;   
+  color: var(--text-white);
+  margin: 0 0 16px;
+}
+
+
+/* ------------ Tables ------------- */
+
+/* Puts the red border around each table */
+.table-frame {
+  border: 5px solid var(--accent-red);  /* border thickness */
+  border-radius: 2px;
+  overflow: hidden;                     /* keeps the border's corners clean */
+}
+
+/* Sets up standard table format, collapses any double borders into a single line */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cell-white);
+}
+
+/* Same cell styling for the label (<th>) and value (<td>) cells */
+th, td {
+  text-align: left;
+  padding: 16px 20px;          /* cell padding */
+  font-size: 17px;             /* table text size */
+  line-height: 1.5;
+  vertical-align: middle;
+  border: 1.5px solid #000;  /* black outline around every cell */
+}
+
+/* Label column (left side): light blue background, bold text, fixed width */
+th {
+  background: var(--header-blue);
+  color: var(--text-black);
+  font-weight: 700;
+  width: 250px;          /* label-column width */
+  white-space: nowrap;   /* keeps labels on one line on wide screens */
+}
+
+/* Value column (right side): white background, normal text */
+td {
+  background: var(--cell-white);
+  color: var(--text-black);
+  font-weight: 400;
+}
+
+/* Footer, matches the header bar */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: var(--header-blue);  
+  color: var(--text-black);        
+  font-size: 16px;
+}
+
+/* Claude Suggested: updates formatting for mobile device screens */
+@media (max-width: 600px) {
+  .topbar-inner { flex-direction: column; text-align: center; }
+  .topbar-left { flex-direction: column; }  /* stack logo above title on mobile */
+  .header-btn { margin-top: 12px; }         /* space above button when stacked */
+  th { width: auto; white-space: normal; }
+  th, td { display: block; width: 100%; }
+  table tr { display: block; }
+  th { border-bottom: 1px solid #00000022; }
+}
+
+</style>
 </head>
 <body>
 
-    <h1>Hello, World! Welcome to my GitHub website.</h1>
+  <!-- Header: project title, logo, button -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <img class="logo" src="RS_Logo_Final.png" alt="Robot Sumo logo">
+
+        <!-- Project title -->
+        <h1 class="title">Robot Sumo Simulation Senior Design Project </h1>
+      </div>
+
+      <!-- Button: links to about.html page -->
+      <a class="header-btn" href="about.html">What is Robot Sumo?</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SECTION 1: Project Overview -->
+    <section class="block">
+      <!-- Section heading text -->
+      <h2 class="section-label">Section 1. Project Overview</h2>
+
+      <div class="table-frame">
+        <table>
+          <tr>
+            <!-- Project title -->
+            <th>Project Title</th>
+            <td>
+              Robot Sumo Simulation: Build AI Agents that Battle, Adapt, and Work as a Team
+            </td>
+          </tr>
+          <tr>
+            <!-- Team members and their emails -->
+            <th>Team Members</th>
+            <td>
+              Adebare Kofo-Abayomi, akofoaabyomi2022@my.fit.edu<br>
+              Avlynn Wade, awade2024@my.fit.edu<br>
+              Faysal Zaki, fzaki2023@my.fit.edu <br>
+              Joshua Oziel Fernández Alvarado, jfernandezal2023@my.fit.edu
+            </td>
+          </tr>
+          <tr>
+            <!-- Faculty advisor and email -->
+            <th>Faculty Advisor</th>
+            <td>Dr. Hanks, thanks@fit.edu</td>
+          </tr>
+          <tr>
+            <!-- Department -->
+            <th>Department</th>
+            <td>Florida Institute of Technology, <br> Department of Electrical Engineering and Computer Science</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: First Semester Deliverables -->
+    <section class="block">
+      <h2 class="section-label">Section 2. First Semester Deliverables</h2>
+
+      <div class="table-frame">
+        <table>
+          <tr>
+            <th>Plan (Aug 31)</th>
+            <td><a href="https://docs.google.com/presentation/d/18is3PwXLyemFAFtwkvwSRGW8fRMEKMfHYiy1aaZirUc/edit?usp=sharing" target="_blank">Presentation</a>, <a href="https://docs.google.com/document/d/188lssRIa7VBrvkFkFDTRBkAbM3DSrgzcdWbDlsWoYqY/edit?usp=sharing" target="_blank">Plan</a></td>
+          </tr>
+          <tr>
+            <th>Milestone 1 (Sep 28)</th>
+            <!-- Fill in for Milestone 1 -->
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Milestone 2 (Oct 26)</th>
+            <!-- Fill in for Milestone 2 -->
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Milestone 3 (Nov 23)</th>
+            <!-- Fill in for Milestone 3 -->
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Second Semester Deliverables -->
+    <section class="block">
+      <h2 class="section-label">Section 3. Second Semester Deliverables</h2>
+
+      <div class="table-frame">
+        <table>
+          <tr>
+            <th>Plan ( )</th>
+            <!-- Fill in for Presentation and Plan -->
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Milestone 4 ( )</th>
+            <!-- Fill in for Milestone 4 -->
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Milestone 5 ( )</th>
+            <!-- Fill in for Milestone 5 -->
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Milestone 6 ( )</th>
+            <!-- Fill in for Milestone 6 -->
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer text: title, senior design year, department -->
+  <footer>
+    <p><strong>Robot Sumo Simulation &middot; Senior Design (2026-27) &middot; Florida Institute of Technology</strong></p>
+  </footer>
 
 </body>
 </html>
