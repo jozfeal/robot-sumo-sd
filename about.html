@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Browser tab title -->
+<title>What is Robot Sumo? — Robot Sumo Simulation</title>
+
+<!-- Browser tab icon. -->
+<link rel="icon" type="image/png" href="RS_Logo_Final.png">
+
+<!-- Imported Google Fonts: Anton (headings) and Inter (other text) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<!-- Style for Website: CSS rules (same as index.html)-->
+<style>
+
+/* Color variables */
+:root {
+  --bg-black:      #000000;   /* website background (black) */
+  --header-blue:   #BFE1F5;   /* light-blue for header/footer bars and tables */
+  --accent-red:    #FF4141;   /* red table border */
+  --cell-white:    #FFFFFF;   /* table background (white) */
+  --text-black:    #000000;   /* black text for light backgrounds */
+  --text-white:    #FFFFFF;   /* white text for dark backgrounds */
+
+  /* Fonts used */
+  --font-display: 'Anton', 'Arial Narrow Bold', sans-serif; /* title text */
+  --font-body:    'Inter', Arial, Helvetica, sans-serif;    /* body text */
+}
+
+/* Base page styling: sets background and fonts */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-black);    /* background */
+  color: var(--text-white);       
+  font-family: var(--font-body);  /* set font */
+}
+
+
+/* ------------ Website Header ------------- */
+
+/* Sets light-blue bar at the top of the page. */ 
+.topbar {
+  background: var(--header-blue);
+  padding: 24px clamp(16px, 4vw, 48px);  /* allows elements to scale dynamically based on screen size */
+}
+
+/* Centers the header's content and spaces the logo/title and button elements */
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* pushes the button to the far right */
+  gap: 15px;
+  max-width: 1300px;   
+  margin: 0 auto;
+}
+
+/* Groups the logo and title together */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Header button (Used to link Back to Project) */
+.header-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text-white);
+  background: var(--accent-red);
+  border: 2px solid var(--text-black);
+  border-radius: 4px;
+  padding: 20px 25px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Hover effect for buttons */
+.header-btn:hover {
+  background: var(--cell-white);
+  color: var(--text-black);
+  border-color: var(--accent-black);
+}
+
+/* Logo sizing */
+.logo {
+  width: 130px;         
+  height: 130px;
+  flex-shrink: 0;
+  margin: -27px 0;
+}
+
+/* Project title text */
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;    
+  color: var(--text-black);
+  font-size: clamp(14px, 3vw, 44px); 
+  line-height: 1.05;
+  letter-spacing: 0.5px;
+  margin: 0;
+  white-space: nowrap;              /* forces title to stay on a single line */
+}
+
+
+/* ------------ Page Layout ------------- */
+
+/* Main content column: centers everything, sets the max width for tables */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px clamp(16px, 4vw, 48px) 64px;
+}
+
+/* Vertical space set between tables */
+.block {
+  margin-bottom: 60px; 
+}
+.block:last-child {
+  margin-bottom: 0;
+}
+
+/* Section heading text style */
+.section-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 25px;   
+  color: var(--text-white);
+  margin: 0 0 16px;
+}
+
+
+/* ------------ Robo Sumo Video Layout ------------- */
+
+/* Reused red-border look from index.html, sized for a large video */
+.video-frame {
+  border: 5px solid var(--accent-red);  /* same border thickness as the tables */
+  border-radius: 2px;
+  overflow: hidden;                     /* keeps the border's corners clean */
+  background: #000;
+  aspect-ratio: 16 / 9;                 /* keeps a 16:9 shape at any width, so the video scales right */
+}
+
+/* Forces the video element to fill the entire .video-frame box */
+.video-frame video,
+.video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Intro paragraph styling above the video */
+.intro-text {
+  font-size: 17px;          
+  line-height: 1.6;
+  color: var(--text-white);
+  max-width: 800px;
+  margin: 0 0 32px;
+}
+
+/* Footer, matches the header bar */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: var(--header-blue); 
+  color: var(--text-black);
+  font-size: 16px;
+}
+
+/* Claude Suggested: formats page for mobile devices */
+@media (max-width: 600px) {
+  .topbar-inner { flex-direction: column; text-align: center; }
+  .topbar-left { flex-direction: column; }
+  .header-btn { margin-top: 12px; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Header (same as index.html) -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <img class="logo" src="RS_Logo_Final.png" alt="Robot Sumo logo">
+
+        <!-- Project title -->
+        <h1 class="title">Robot Sumo Simulation Senior Design Project</h1>
+      </div>
+
+      <!-- Button: links back to the project homepage -->
+      <a class="header-btn" href="index.html">Back to Project</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="block">
+      <!-- Section heading text -->
+      <h2 class="section-label">Section 4. What is Robot Sumo?</h2>
+
+      <!-- Intro paragraph -->
+      <p class="intro-text">
+        Robot Sumo is a competitive event where two autonomous robots try to
+        push each other out of a circular ring. Watch the video below for a
+        quick overview of how matches work and what our simulation aims to model.
+      </p>
+
+      <!-- Robot Sumo video -->
+      <div class="video-frame">
+        
+        <!-- Video sourced from faculty presentation-->
+        <iframe
+          src="https://www.youtube.com/embed/7ot32yQUQGo?start=2"
+          title="What is Robot Sumo?"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer (same as index.html) -->
+  <footer>
+    <p><strong>Robot Sumo Simulation &middot; Senior Design (2026-27) &middot; Florida Institute of Technology</strong></p>
+  </footer>
+
+</body>
+</html>
