@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
 [ext_resource type="Script" uid="uid://57opdw4w1qrh" path="res://components/vehicle_controller_3d.gd" id="3_6558x"]
+[ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cyina"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -23,6 +24,10 @@ uv1_triplanar = true
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7am6p"]
 data = PackedVector3Array(-10, -0.5, 10, -10, -0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, -0.5, -10, -10, -0.5, 10, -10, 0.5, -10, -10, -0.5, -10, 10, -0.5, -10, -10, 0.5, -10, -10, 0.5, 10, -10, -0.5, 10, -10, -0.5, 10, -10, 0.5, 10, 10, 0.5, 10, 10, 0.5, 10, -10, 0.5, 10, -10, 0.5, -10, -10, -0.5, 10, 10, -0.5, 10, 10, -0.5, -10, 10, 0.5, 10, 10, -0.5, 10, -10, -0.5, 10, 10, -0.5, -10, 10, -0.5, 10, 10, 0.5, 10, 10, -0.5, -10, 10, 0.5, -10, -10, 0.5, -10, -10, 0.5, -10, 10, 0.5, -10, 10, 0.5, 10, 10, 0.5, 10, 10, 0.5, -10, 10, -0.5, -10)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 20.0
+radius = 10.0
+
 [node name="Main" type="Node3D" unique_id=2034509664]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
@@ -34,9 +39,21 @@ shadow_enabled = true
 
 [node name="World" type="StaticBody3D" parent="." unique_id=1883173728]
 
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="World" unique_id=1115049733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+radius = 10.0
+height = 1.0
+sides = 50
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="World/CSGCylinder3D" unique_id=2039781943]
+operation = 2
+radius = 9.5
+height = 1.0
+sides = 50
+
 [node name="CSGBox3D" type="CSGBox3D" parent="World" unique_id=1991514157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-size = Vector3(20, 1, 20)
+size = Vector3(25, 1, 25)
 material = SubResource("StandardMaterial3D_goxoi")
 
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="World" unique_id=963996640]
@@ -44,17 +61,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ConcavePolygonShape3D_7am6p")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1823601430]
-transform = Transform3D(-0.7071068, 0.24184474, -0.66446304, 0, 0.9396926, 0.34202012, 0.7071068, 0.24184474, -0.66446304, -7, 4, -7)
+transform = Transform3D(-0.70710677, 0.61237246, -0.35355335, 0, 0.49999997, 0.86602545, 0.70710677, 0.61237246, -0.35355335, -7, 11, -7)
 
 [node name="BlueRobot" parent="." unique_id=1119450236 instance=ExtResource("2_gisfo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
+robot_name = "Blue"
 color = Color(0.3527628, 0.5527516, 1, 1)
 
 [node name="RedRobot" parent="." unique_id=651725520 instance=ExtResource("2_gisfo")]
 transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -3.4664612, 0, 4.353595)
+robot_name = "Red"
 color = Color(0.9998551, 0.36102337, 0.29374388, 1)
 
 [node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
 script = ExtResource("3_6558x")
 vehicle = NodePath("../BlueRobot")
 engine_power = 100.0
+
+[node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots")]
+monitorable = false
+script = ExtResource("4_goxoi")
+robots = [NodePath("../BlueRobot"), NodePath("../RedRobot")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RingArea" unique_id=1038656629]
+shape = SubResource("CylinderShape3D_xrivr")
+
+[connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
