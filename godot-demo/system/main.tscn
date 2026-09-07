@@ -46,10 +46,15 @@ shape = SubResource("ConcavePolygonShape3D_7am6p")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1823601430]
 transform = Transform3D(-0.7071068, 0.24184474, -0.66446304, 0, 0.9396926, 0.34202012, 0.7071068, 0.24184474, -0.66446304, -7, 4, -7)
 
-[node name="BaseRobot" parent="." unique_id=1119450236 instance=ExtResource("2_gisfo")]
+[node name="BlueRobot" parent="." unique_id=1119450236 instance=ExtResource("2_gisfo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
+color = Color(0.3527628, 0.5527516, 1, 1)
+
+[node name="RedRobot" parent="." unique_id=651725520 instance=ExtResource("2_gisfo")]
+transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -3.4664612, 0, 4.353595)
+color = Color(0.9998551, 0.36102337, 0.29374388, 1)
 
 [node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
 script = ExtResource("3_6558x")
-vehicle = NodePath("../BaseRobot")
+vehicle = NodePath("../BlueRobot")
 engine_power = 100.0
