@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Godot Demo"
+run/main_scene="uid://1rs2k3xrq2f2"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/mode="viewport"
 
 [physics]
 
