@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://c07dkdxs2thr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(1.2, 0.6, 1)
+
+[node name="BaseRobot" type="VehicleBody3D" unique_id=1119450236]
+
+[node name="Body" type="CSGBox3D" parent="." unique_id=333817671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+size = Vector3(1.2, 0.6, 1)
+
+[node name="FrontLeft" type="VehicleWheel3D" parent="." unique_id=433389740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.2, -0.3)
+use_as_traction = true
+wheel_radius = 0.2
+wheel_rest_length = 0.08
+suspension_travel = 0.1
+suspension_stiffness = 50.0
+damping_compression = 3.0
+damping_relaxation = 3.8
+
+[node name="FrontLeftMesh" type="CSGCylinder3D" parent="FrontLeft" unique_id=635785441]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.2
+height = 0.3
+sides = 10
+
+[node name="FrontRight" type="VehicleWheel3D" parent="." unique_id=117017481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.2, -0.3)
+use_as_traction = true
+wheel_radius = 0.2
+wheel_rest_length = 0.08
+suspension_travel = 0.1
+suspension_stiffness = 50.0
+damping_compression = 3.0
+damping_relaxation = 3.8
+
+[node name="FrontRightMesh" type="CSGCylinder3D" parent="FrontRight" unique_id=242623159]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.2
+height = 0.3
+sides = 10
+
+[node name="BackLeft" type="VehicleWheel3D" parent="." unique_id=782166025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.2, 0.3)
+use_as_traction = true
+wheel_radius = 0.2
+wheel_rest_length = 0.08
+suspension_travel = 0.1
+suspension_stiffness = 50.0
+damping_compression = 3.0
+damping_relaxation = 3.8
+
+[node name="BackLeftMesh" type="CSGCylinder3D" parent="BackLeft" unique_id=1764790269]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.2
+height = 0.3
+sides = 10
+
+[node name="BackRight" type="VehicleWheel3D" parent="." unique_id=409956077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.2, 0.3)
+use_as_traction = true
+wheel_radius = 0.2
+wheel_rest_length = 0.08
+suspension_travel = 0.1
+suspension_stiffness = 50.0
+damping_compression = 3.0
+damping_relaxation = 3.8
+
+[node name="BackRightMesh" type="CSGCylinder3D" parent="BackRight" unique_id=1202282975]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.2
+height = 0.3
+sides = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=634927999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+shape = SubResource("BoxShape3D_xrivr")
