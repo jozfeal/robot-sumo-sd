@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://1rs2k3xrq2f2"]
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
+[ext_resource type="Script" uid="uid://dulb5osgdwkgm" path="res://system/manager.gd" id="1_tuma4"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
 [ext_resource type="Script" uid="uid://57opdw4w1qrh" path="res://components/vehicle_controller_3d.gd" id="3_6558x"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
@@ -33,6 +34,9 @@ font_size = 90
 outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
+
+[node name="Manager" type="Node" parent="." unique_id=342534952]
+script = ExtResource("1_tuma4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
 environment = SubResource("Environment_gisfo")
