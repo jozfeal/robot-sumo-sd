@@ -21,12 +21,16 @@ glow_enabled = true
 albedo_texture = ExtResource("1_7am6p")
 uv1_triplanar = true
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7am6p"]
-data = PackedVector3Array(-10, -0.5, 10, -10, -0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, -0.5, -10, -10, -0.5, 10, -10, 0.5, -10, -10, -0.5, -10, 10, -0.5, -10, -10, 0.5, -10, -10, 0.5, 10, -10, -0.5, 10, -10, -0.5, 10, -10, 0.5, 10, 10, 0.5, 10, 10, 0.5, 10, -10, 0.5, 10, -10, 0.5, -10, -10, -0.5, 10, 10, -0.5, 10, 10, -0.5, -10, 10, 0.5, 10, 10, -0.5, 10, -10, -0.5, 10, 10, -0.5, -10, 10, -0.5, 10, 10, 0.5, 10, 10, -0.5, -10, 10, 0.5, -10, -10, 0.5, -10, -10, 0.5, -10, 10, 0.5, -10, 10, 0.5, 10, 10, 0.5, 10, 10, 0.5, -10, 10, -0.5, -10)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_goxoi"]
+data = PackedVector3Array(-12.5, -0.5, 12.5, -12.5, -0.5, -12.5, -12.5, 0.5, -12.5, 12.5, -0.5, -12.5, -12.5, -0.5, -12.5, -12.5, -0.5, 12.5, -12.5, 0.5, -12.5, -12.5, -0.5, -12.5, 12.5, -0.5, -12.5, -12.5, 0.5, -12.5, -12.5, 0.5, 12.5, -12.5, -0.5, 12.5, -12.5, -0.5, 12.5, -12.5, 0.5, 12.5, 12.5, 0.5, 12.5, 12.5, 0.5, 12.5, -12.5, 0.5, 12.5, -12.5, 0.5, -12.5, -12.5, -0.5, 12.5, 12.5, -0.5, 12.5, 12.5, -0.5, -12.5, 12.5, 0.5, 12.5, 12.5, -0.5, 12.5, -12.5, -0.5, 12.5, 12.5, -0.5, -12.5, 12.5, -0.5, 12.5, 12.5, 0.5, 12.5, 12.5, -0.5, -12.5, 12.5, 0.5, -12.5, -12.5, 0.5, -12.5, -12.5, 0.5, -12.5, 12.5, 0.5, -12.5, 12.5, 0.5, 12.5, 12.5, 0.5, 12.5, 12.5, 0.5, -12.5, 12.5, -0.5, -12.5)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
 height = 20.0
 radius = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_xrivr"]
+font_size = 90
+outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
@@ -56,34 +60,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 size = Vector3(25, 1, 25)
 material = SubResource("StandardMaterial3D_goxoi")
 
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="World" unique_id=963996640]
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="World" unique_id=1070925561]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("ConcavePolygonShape3D_7am6p")
+shape = SubResource("ConcavePolygonShape3D_goxoi")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1823601430]
 transform = Transform3D(-0.70710677, 0.61237246, -0.35355335, 0, 0.49999997, 0.86602545, 0.70710677, 0.61237246, -0.35355335, -7, 11, -7)
 
-[node name="BlueRobot" parent="." unique_id=1119450236 instance=ExtResource("2_gisfo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
-robot_name = "Blue"
-color = Color(0.3527628, 0.5527516, 1, 1)
+[node name="Robots" type="Node" parent="." unique_id=1247978935]
 
-[node name="RedRobot" parent="." unique_id=651725520 instance=ExtResource("2_gisfo")]
+[node name="RedRobot" parent="Robots" unique_id=651725520 instance=ExtResource("2_gisfo")]
 transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -3.4664612, 0, 4.353595)
 robot_name = "Red"
 color = Color(0.9998551, 0.36102337, 0.29374388, 1)
 
+[node name="BlueRobot" parent="Robots" unique_id=1119450236 instance=ExtResource("2_gisfo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
+robot_name = "Blue"
+color = Color(0.3527628, 0.5527516, 1, 1)
+
 [node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
 script = ExtResource("3_6558x")
-vehicle = NodePath("../BlueRobot")
+vehicle = NodePath("../Robots/BlueRobot")
 engine_power = 100.0
 
-[node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots")]
+[node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots", "win_text")]
 monitorable = false
 script = ExtResource("4_goxoi")
-robots = [NodePath("../BlueRobot"), NodePath("../RedRobot")]
+robots = [NodePath("../Robots/BlueRobot"), NodePath("../Robots/RedRobot")]
+win_text = NodePath("../CanvasLayer/WinText")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RingArea" unique_id=1038656629]
 shape = SubResource("CylinderShape3D_xrivr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1204695317]
+
+[node name="WinText" type="Label" parent="CanvasLayer" unique_id=264421239]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Robot wins!"
+label_settings = SubResource("LabelSettings_xrivr")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
