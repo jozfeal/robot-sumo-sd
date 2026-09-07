@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
+[ext_resource type="Script" uid="uid://57opdw4w1qrh" path="res://components/vehicle_controller_3d.gd" id="3_6558x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cyina"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -46,4 +47,9 @@ shape = SubResource("ConcavePolygonShape3D_7am6p")
 transform = Transform3D(-0.7071068, 0.24184474, -0.66446304, 0, 0.9396926, 0.34202012, 0.7071068, 0.24184474, -0.66446304, -7, 4, -7)
 
 [node name="BaseRobot" parent="." unique_id=1119450236 instance=ExtResource("2_gisfo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
+
+[node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
+script = ExtResource("3_6558x")
+vehicle = NodePath("../BaseRobot")
+engine_power = 100.0
