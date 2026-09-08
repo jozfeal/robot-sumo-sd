@@ -38,13 +38,24 @@ def check_loss_condition(robot: Robot):
         rect = text_surf.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2))
         screen.blit(text_surf, rect)
 
+        text_surf = FONT.render("Press R to restart.", True, valid_robots[0].color)
+        rect = text_surf.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 + 60))
+        screen.blit(text_surf, rect)
+
 # Main game loop
 running = True
 while running:
     # Checks for window being closed
     for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            # Restart game when pressing R
+            if event.key == pygame.K_r:
+                robots[0].x, robots[0].y, robots[0].angle = RING_CENTER[0], RING_CENTER[1] + 200, 0
+                robots[1].x, robots[1].y, robots[1].angle = RING_CENTER[0], RING_CENTER[1] - 200, 180
+                valid_robots = robots.copy()
+                
 
     # Draw background first
     screen.fill(BLACK)
