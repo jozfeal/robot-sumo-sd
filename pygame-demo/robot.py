@@ -3,7 +3,8 @@ import math
 
 # Robot class used for representing the robots in space
 class Robot:
-    def __init__(self, x, y, color, size=80, angle=0, speed=8, turn_speed = 6):
+    def __init__(self, robot_name, x, y, color, size=80, angle=0, speed=8, turn_speed = 6):
+        self.robot_name = robot_name
         self.x = x
         self.y = y
         self.angle = angle
