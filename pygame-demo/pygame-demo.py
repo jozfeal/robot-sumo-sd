@@ -23,7 +23,7 @@ RED = (220, 70, 70)
 
 # Initialize robots
 blue = Robot(RING_CENTER[0], RING_CENTER[1] + 200, BLUE)
-red = Robot(RING_CENTER[0], RING_CENTER[1] - 200, RED)
+red = Robot(RING_CENTER[0], RING_CENTER[1] - 200, RED, angle=180)
 
 # Main game loop
 running = True
