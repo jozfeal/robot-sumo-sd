@@ -1,4 +1,5 @@
 import pygame
+import math
 
 # Robot class used for representing the robots in space
 class Robot:
@@ -15,6 +16,7 @@ class Robot:
     def rect(self):
         return pygame.Rect(self.x - self.size / 2, self.y - self.size / 2, self.size, self.size)
 
+    # Displays robot on screen with its position and rotation
     def draw(self, surf):
         # Rotate a square surface to match self.angle so you can see facing direction
         base = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
@@ -25,3 +27,13 @@ class Robot:
         rotated = pygame.transform.rotate(base, -self.angle)
         rect = rotated.get_rect(center=(self.x, self.y))
         surf.blit(rotated, rect)
+
+    # Adjusts robot's position based on given inputs
+    def move_input(self, forward, turn):
+        # Rotate based on turn input
+        self.angle += turn * self.turn_speed
+
+        # Move forward based on angle
+        rad = math.radians(self.angle)
+        self.y -= math.cos(rad) * forward * self.speed
+        self.x += math.sin(rad) * forward * self.speed

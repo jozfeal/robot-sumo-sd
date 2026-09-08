@@ -33,6 +33,12 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
 
+    # Get input from player
+    keys = pygame.key.get_pressed()
+    forward = (keys[pygame.K_w]) - (keys[pygame.K_s])   # 1, -1, or 0 if both/neither pressed
+    turn = (keys[pygame.K_d]) - (keys[pygame.K_a])       # 1, -1, or 0 if both/neither pressed
+    blue.move_input(forward, turn)
+
     # All draw calls
     screen.fill(BLACK)
     pygame.draw.circle(screen, WHITE, RING_CENTER, RING_RADIUS, width=15)
