@@ -1,5 +1,6 @@
 import pygame
 import sys
+from robot import Robot
 
 # Pygame Setup
 pygame.init()
@@ -20,6 +21,10 @@ BLACK = (20, 20, 20)
 BLUE = (60, 120, 230)
 RED = (220, 70, 70)
 
+# Initialize robots
+blue = Robot(RING_CENTER[0], RING_CENTER[1] + 200, BLUE)
+red = Robot(RING_CENTER[0], RING_CENTER[1] - 200, RED)
+
 # Main game loop
 running = True
 while running:
@@ -28,9 +33,11 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
 
-    # Black background with white ring
+    # All draw calls
     screen.fill(BLACK)
     pygame.draw.circle(screen, WHITE, RING_CENTER, RING_RADIUS, width=15)
+    blue.draw(screen)
+    red.draw(screen)
 
     # Redraws screen and continues game
     pygame.display.flip()
