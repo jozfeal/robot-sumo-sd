@@ -1,0 +1,3 @@
+[submodule "UnityPrototype"]
+	path = UnityPrototype
+	url = https://github.com/JohnKieser/SumoPhysicsPrototype
