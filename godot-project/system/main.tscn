@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://1rs2k3xrq2f2"]
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
-[ext_resource type="Script" uid="uid://dulb5osgdwkgm" path="res://system/manager.gd" id="1_tuma4"]
+[ext_resource type="Script" uid="uid://c50ew7fq7as4v" path="res://system/simulation_manager.gd" id="1_tuma4"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
-[ext_resource type="Script" uid="uid://57opdw4w1qrh" path="res://components/vehicle_controller_3d.gd" id="3_6558x"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
+[ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robots/robot_controller.gd" id="5_tuma4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cyina"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,8 +35,9 @@ outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
-[node name="Manager" type="Node" parent="." unique_id=342534952]
+[node name="SimulationManager" type="Node" parent="." unique_id=1753323360]
 script = ExtResource("1_tuma4")
+metadata/_custom_type_script = "uid://c50ew7fq7as4v"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
 environment = SubResource("Environment_gisfo")
@@ -83,11 +84,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
 robot_name = "Blue"
 color = Color(0.3527628, 0.5527516, 1, 1)
 
-[node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
-script = ExtResource("3_6558x")
-vehicle = NodePath("../Robots/BlueRobot")
-engine_power = 100.0
-
 [node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots", "win_text")]
 monitorable = false
 script = ExtResource("4_goxoi")
@@ -110,5 +106,25 @@ text = "Robot wins!"
 label_settings = SubResource("LabelSettings_xrivr")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BlueController" type="Node" parent="." unique_id=1308884516 node_paths=PackedStringArray("robot")]
+script = ExtResource("5_tuma4")
+input_forward = "p1_forward"
+input_backward = "p1_backward"
+input_left = "p1_left"
+input_right = "p1_right"
+robot = NodePath("../Robots/BlueRobot")
+engine_power = 100.0
+metadata/_custom_type_script = "uid://x6xqirqhn2qu"
+
+[node name="RedController" type="Node" parent="." unique_id=1710127970 node_paths=PackedStringArray("robot")]
+script = ExtResource("5_tuma4")
+input_forward = "p2_forward"
+input_backward = "p2_backward"
+input_left = "p2_left"
+input_right = "p2_right"
+robot = NodePath("../Robots/RedRobot")
+engine_power = 100.0
+metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
