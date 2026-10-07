@@ -35,6 +35,10 @@ outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
+[node name="SimulationManager" type="Node" parent="." unique_id=450562857]
+script = ExtResource("1_noety")
+metadata/_custom_type_script = "uid://c50ew7fq7as4v"
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
 environment = SubResource("Environment_gisfo")
 
@@ -107,9 +111,5 @@ vertical_alignment = 1
 script = ExtResource("5_noety")
 robot = NodePath("../Robots/BlueRobot")
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
-
-[node name="SimulationManager" type="Node" parent="." unique_id=450562857]
-script = ExtResource("1_noety")
-metadata/_custom_type_script = "uid://c50ew7fq7as4v"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
