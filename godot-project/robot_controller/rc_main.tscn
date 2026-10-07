@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxxsbrai2xrf3"]
 
-[ext_resource type="Script" uid="uid://cmbk61m6r317g" path="res://robot_controller/simulation_manager.gd" id="1_noety"]
+[ext_resource type="Script" uid="uid://dulb5osgdwkgm" path="res://system/manager.gd" id="1_plbns"]
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="2_snwb4"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="3_c8c3b"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="5_gk2um"]
@@ -35,10 +35,8 @@ outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
-[node name="SimulationManager" type="Node" parent="." unique_id=388584785 node_paths=PackedStringArray("pnodes")]
-script = ExtResource("1_noety")
-pnodes = [NodePath("../RobotController")]
-metadata/_custom_type_script = "uid://cmbk61m6r317g"
+[node name="Manager" type="Node" parent="." unique_id=342534952]
+script = ExtResource("1_plbns")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
 environment = SubResource("Environment_gisfo")
@@ -108,9 +106,8 @@ label_settings = SubResource("LabelSettings_xrivr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RobotController" type="Node" parent="." unique_id=1384827046 node_paths=PackedStringArray("robot")]
+[node name="RobotController" type="Node" parent="." unique_id=1384827046]
 script = ExtResource("5_noety")
-robot = NodePath("../Robots/BlueRobot")
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
