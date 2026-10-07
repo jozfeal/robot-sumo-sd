@@ -39,7 +39,7 @@ func _ready() -> void:
 	assert(InputMap.has_action(input_left), "%s is not defined in InputMap." % input_left)
 	assert(InputMap.has_action(input_right), "%s is not defined in InputMap." % input_right)
 
-func _physics_process(delta: float) -> void:
+func physics_step(delta: float):
 	var max_rads: float = deg_to_rad(max_steer)
 	robot.steering = move_toward(robot.steering, Input.get_axis(input_right, input_left) * max_rads, \
 		delta * turn_speed)
