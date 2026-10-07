@@ -14,12 +14,16 @@ enum InputMode {
 ## Defines if the controller receives input as a value or through user inputs.
 @export var input_mode: InputMode
 ## Must be defined in Input Map.
+## Only in effect if [member input_mode] is set to [enum InputMode.USER].
 @export var input_forward: String = "forward"
 ## Must be defined in Input Map.
+## Only in effect if [member input_mode] is set to [enum InputMode.USER].
 @export var input_backward: String = "backward"
 ## Must be defined in Input Map.
+## Only in effect if [member input_mode] is set to [enum InputMode.USER].
 @export var input_left: String = "left"
 ## Must be defined in Input Map.
+## Only in effect if [member input_mode] is set to [enum InputMode.USER].
 @export var input_right: String = "right"
 
 @export_group("Nodes")

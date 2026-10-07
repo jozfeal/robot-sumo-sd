@@ -107,9 +107,23 @@ label_settings = SubResource("LabelSettings_xrivr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RobotController" type="Node" parent="." unique_id=1384827046 node_paths=PackedStringArray("robot")]
+[node name="BlueController" type="Node" parent="." unique_id=1384827046 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_noety")
+input_forward = "p1_forward"
+input_backward = "p1_backward"
+input_left = "p1_left"
+input_right = "p1_right"
 robot = NodePath("../Robots/BlueRobot")
+metadata/_custom_type_script = "uid://x6xqirqhn2qu"
+
+[node name="RedController" type="Node" parent="." unique_id=355442113 node_paths=PackedStringArray("robot")]
+script = ExtResource("5_noety")
+input_mode = 1
+input_forward = "p2_forward"
+input_backward = "p2_backward"
+input_left = "p2_left"
+input_right = "p2_right"
+robot = NodePath("../Robots/RedRobot")
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
