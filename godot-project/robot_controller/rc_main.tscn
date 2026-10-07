@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dulb5osgdwkgm" path="res://system/manager.gd" id="1_plbns"]
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="2_snwb4"]
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="3_c8c3b"]
-[ext_resource type="Script" uid="uid://57opdw4w1qrh" path="res://components/vehicle_controller_3d.gd" id="4_0nf4m"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="5_gk2um"]
+[ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robot_controller/robot_controller.gd" id="5_noety"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cyina"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -83,11 +83,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
 robot_name = "Blue"
 color = Color(0.3527628, 0.5527516, 1, 1)
 
-[node name="VehicleController3D" type="Node" parent="." unique_id=1020259177 node_paths=PackedStringArray("vehicle")]
-script = ExtResource("4_0nf4m")
-vehicle = NodePath("../Robots/BlueRobot")
-engine_power = 100.0
-
 [node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots", "win_text")]
 monitorable = false
 script = ExtResource("5_gk2um")
@@ -110,5 +105,9 @@ text = "Robot wins!"
 label_settings = SubResource("LabelSettings_xrivr")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RobotController" type="Node" parent="." unique_id=1384827046]
+script = ExtResource("5_noety")
+metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]

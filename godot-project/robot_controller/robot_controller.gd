@@ -1,4 +1,6 @@
-## Component that provides movement for a [VehicleBody3D] through inputs.
+## Component that provides movement for a [Robot].
+## Can be set to utilize inputs defined in the InputMap or take
+## an input as a value.
 class_name RobotController
 extends Node
 
@@ -13,8 +15,8 @@ extends Node
 @export var input_right: String = "right"
 
 @export_group("Nodes")
-## Vehicle to apply movement to.
-@export var vehicle: VehicleBody3D
+## Robot that this controller is assigned to.
+@export var robot: Robot
 @export_group("")
 
 @export_group("Vehicle Quirks")
@@ -24,7 +26,7 @@ extends Node
 @export var invert_engine_force: bool = false
 @export_group("")
 
-## Maximum degrees in radians the steering wheels are able to turn.
+## Maximum degrees in degrees the steering wheels are able to turn.
 @export var max_steer: float = 45
 ## How fast the steering wheels turn.
 @export var turn_speed: float = 2.5
@@ -39,8 +41,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var max_rads: float = deg_to_rad(max_steer)
-	vehicle.steering = move_toward(vehicle.steering, Input.get_axis(input_right, input_left) * max_rads, \
+	robot.steering = move_toward(robot.steering, Input.get_axis(input_right, input_left) * max_rads, \
 		delta * turn_speed)
 	
 	var throttle_input: float = Input.get_axis(input_backward, input_forward)
-	vehicle.engine_force = throttle_input * engine_power * (-1.0 if invert_engine_force else 1.0)
+	robot.engine_force = throttle_input * engine_power * (-1.0 if invert_engine_force else 1.0)
