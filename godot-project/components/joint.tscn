@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d14trnc38q37"]
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" unique_id=661155787]
+node_a = NodePath("../RigidBody3D")
+exclude_nodes_from_collision = false
