@@ -35,8 +35,10 @@ outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
-[node name="SimulationManager" type="Node" parent="." unique_id=1753323360]
+[node name="SimulationManager" type="Node" parent="." unique_id=1753323360 node_paths=PackedStringArray("agent_robot", "robot_holder")]
 script = ExtResource("1_tuma4")
+agent_robot = NodePath("../Robots/BlueRobot")
+robot_holder = NodePath("../Robots")
 metadata/_custom_type_script = "uid://c50ew7fq7as4v"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
@@ -109,6 +111,7 @@ vertical_alignment = 1
 
 [node name="BlueController" type="Node" parent="." unique_id=1308884516 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_tuma4")
+input_mode = 1
 input_forward = "p1_forward"
 input_backward = "p1_backward"
 input_left = "p1_left"

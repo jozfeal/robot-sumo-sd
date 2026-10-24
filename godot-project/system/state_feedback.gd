@@ -1,6 +1,5 @@
 extends Node
 
-var winner: Robot
 # Stores the robots in the match as keys, and their match status as value.
 # When a robot is eliminated from the match its value becomes false.
 var _robot_status: Dictionary
@@ -10,12 +9,17 @@ var _robot_status: Dictionary
 func assign_robots(robots: Array[Robot], agent_index: int) -> void:
 	_robot_status.clear()
 	# Make the agent the first entry of _robot_status
-	robots.pop_at(agent_index)
-	robots.push_front(agent_index)
+	var agent: Robot = robots.pop_at(agent_index)
+	robots.push_front(agent)
 	for r: Robot in robots:
 		_robot_status[r] = true
 
+## Marks a robot as lost in feedback.
+func robot_lost(robot: Robot) -> void:
+	_robot_status[robot] = false
+
 ## Returns a list containing all feedback.
+## Call after all assignments, updates, and at the end of the physics tick.
 func get_feedback() -> Array:
 	# Makes feedback[0] 0 for a draw, -1 for an ongoing match, or the index of the winner
 	# Index is in reference to the feedback array, with 1 being the agent robot

@@ -1,11 +1,20 @@
 class_name SimulationManager
 extends Node
 
+## Robot assigned to the training agent.
+@export var agent_robot: Robot
+## Node holding all robots in simulation as children.
+@export var robot_holder: Node
+
 ## Speed up factor for the physics ticks when running in headless mode.
 var HEADLESS_SPEED_FACTOR: float = 10.0
 var DEFAULT_PHYSICS_TICKS: int = 60
 
 func _ready() -> void:
+	assert(agent_robot != null, "agent_robot not assigned in SimulationManager")
+	# Called in ready for now, should be called by interface later
+	start_simulation()
+	
 	# If the simulation is in headless mode, uncap fps for RL training
 	if DisplayServer.get_name() == "headless" or not DisplayServer.window_can_draw():
 		# Disable VSync so the engine isn't capped by monitor refresh rate
@@ -18,3 +27,10 @@ func _ready() -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
+
+## Initializes a new simulation round.
+func start_simulation() -> void:
+	# Gets all Robot type children of robot_holder and adds them to robots array
+	var robots: Array[Robot] = []
+	robots.assign(robot_holder.get_children().filter(func(child): return child is Robot))
+	StateFeedback.assign_robots(robots, robots.find(agent_robot))
