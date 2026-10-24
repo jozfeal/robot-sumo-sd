@@ -34,15 +34,8 @@ func get_feedback() -> Array:
 	
 	# Adds an entry to feedback for each robot with their state
 	for robot: Robot in _robot_status:
-		var state: Dictionary = {
-			"active": false,
-			"position": Vector3.ZERO,
-			"rotation": Vector3.ZERO,
-			"engine_force": 0.0,
-			"steering": 0.0
-		}
-		
-		# Gets all the properties from the robot
+		var state: Dictionary
+		# Get all the properties from the robot
 		state["active"] = _robot_status[robot]
 		state["position"] = robot.global_position
 		state["rotation"] = robot.rotation
