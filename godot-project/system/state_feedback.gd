@@ -5,7 +5,7 @@ extends Node
 var _robot_status: Dictionary
 
 ## Stores an internal dictionary of robots and marks them all as active.
-## [param agent] is the index of the agent's robot inside [param robots].
+## [param agent_index] is the index of the agent's robot inside [param robots].
 func assign_robots(robots: Array[Robot], agent_index: int) -> void:
 	_robot_status.clear()
 	# Make the agent the first entry of _robot_status

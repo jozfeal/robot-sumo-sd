@@ -11,7 +11,7 @@ var HEADLESS_SPEED_FACTOR: float = 10.0
 var DEFAULT_PHYSICS_TICKS: int = 60
 
 func _ready() -> void:
-	assert(agent_robot != null, "agent_robot not assigned in SimulationManager")
+	assert(agent_robot != null, "agent_robot not assigned in SimulationManager.")
 	# Called in ready for now, should be called by interface later
 	start_simulation()
 	
