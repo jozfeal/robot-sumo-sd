@@ -6,6 +6,7 @@ extends Area3D
 func _on_body_exited(body: Node3D) -> void:
 	if body is Robot:
 		robots.erase(body)
+		StateFeedback.robot_lost(body)
 		
 		if robots.size() == 1:
 			win_text.label_settings.font_color = robots[0].color

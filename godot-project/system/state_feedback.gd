@@ -24,9 +24,11 @@ func get_feedback() -> Array:
 	# Makes feedback[0] 0 for a draw, -1 for an ongoing match, or the index of the winner
 	# Index is in reference to the feedback array, with 1 being the agent robot
 	var feedback: Array = [-1]
-	var statuses: Array[bool] = _robot_status.values()
+	var statuses: Array[bool] = []
+	statuses.assign(_robot_status.values())
 	if statuses.count(true) == 1:
-		feedback[0] = statuses.find(true)
+		# Add 1 so that 0 can be used for draws
+		feedback[0] = statuses.find(true) + 1
 	elif statuses.count(true) == 0:
 		feedback[0] = 0
 	
@@ -37,7 +39,6 @@ func get_feedback() -> Array:
 			"position": Vector3.ZERO,
 			"rotation": Vector3.ZERO,
 			"engine_force": 0.0,
-			"brake": 0.0,
 			"steering": 0.0
 		}
 		
