@@ -1,0 +1,45 @@
+extends Node
+
+# Stores the robots in the match as keys, and their match status as value.
+# When a robot is eliminated from the match its value becomes false.
+var _robot_status: Dictionary
+
+## Stores an internal dictionary of robots and marks them all as active.
+## [param agent_index] is the index of the agent's robot inside [param robots].
+func assign_robots(robots: Array[Robot], agent_index: int) -> void:
+	_robot_status.clear()
+	# Make the agent the first entry of _robot_status
+	var agent: Robot = robots.pop_at(agent_index)
+	robots.push_front(agent)
+	for r: Robot in robots:
+		_robot_status[r] = true
+
+## Marks a robot as lost in feedback.
+func robot_lost(robot: Robot) -> void:
+	_robot_status[robot] = false
+
+## Returns a list containing all feedback.
+## Call after all assignments, updates, and at the end of the physics tick.
+func get_feedback() -> Array:
+	# Makes feedback[0] 0 for a draw, -1 for an ongoing match, or the index of the winner
+	# Index is in reference to the feedback array, with 1 being the agent robot
+	var feedback: Array = [-1]
+	var statuses: Array[bool] = []
+	statuses.assign(_robot_status.values())
+	if statuses.count(true) == 1:
+		# Add 1 so that 0 can be used for draws
+		feedback[0] = statuses.find(true) + 1
+	elif statuses.count(true) == 0:
+		feedback[0] = 0
+	
+	# Adds an entry to feedback for each robot with their state
+	for robot: Robot in _robot_status:
+		var state: Dictionary
+		# Get all the properties from the robot
+		state["active"] = _robot_status[robot]
+		state["position"] = robot.global_position
+		state["rotation"] = robot.rotation
+		state["engine_force"] = robot.engine_force
+		state["steering"] = robot.steering
+		feedback.append(state)
+	return feedback
