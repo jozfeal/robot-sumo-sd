@@ -1,0 +1,67 @@
+{
+	"elapsed_seconds": 0.0,
+	"episode_id": 1,
+	"match": {
+		"end_reason": "",
+		"status": "running",
+		"winner": null
+	},
+	"robots": {
+		"blue": {
+			"angular_velocity": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"brake": 0.0,
+			"engine_force": 0.0,
+			"inside_ring": true,
+			"linear_velocity": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"position": [
+				0.0,
+				0.0,
+				-4.87503623962402
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0,
+				1.0
+			],
+			"steering": 0.0
+		},
+		"red": {
+			"angular_velocity": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"brake": 0.0,
+			"engine_force": 0.0,
+			"inside_ring": true,
+			"linear_velocity": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"position": [
+				-3.46646118164062,
+				0.0,
+				4.35359477996826
+			],
+			"rotation": [
+				0.0,
+				0.884144723415375,
+				0.0,
+				0.467213094234467
+			],
+			"steering": 0.0
+		}
+	},
+	"schema_version": 2,
+	"step_id": 0
+}

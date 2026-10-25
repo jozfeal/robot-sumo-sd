@@ -1,11 +1,11 @@
 class_name SimulationManager
 extends Node
 
-# headless runs faster, with the same simulation time per tick
+## Speed up factor for the physics ticks when running in headless mode.
 var HEADLESS_SPEED_FACTOR: float = 10.0
 var DEFAULT_PHYSICS_TICKS: int = 60
 
-# shared across scene reloads
+# survives scene reloads
 static var episode_count := 0
 
 @onready var red_robot: Robot = $"../Robots/RedRobot"
@@ -18,14 +18,16 @@ var _last_delta := 0.0
 
 
 func _ready() -> void:
+	# If the simulation is in headless mode, uncap fps for RL training
 	if DisplayServer.get_name() == "headless" or not DisplayServer.window_can_draw():
+		# Disable VSync so the engine isnt capped by monitor refresh rate
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		Engine.max_fps = 0
 		Engine.time_scale = HEADLESS_SPEED_FACTOR
 		@warning_ignore("narrowing_conversion")
 		Engine.physics_ticks_per_second = DEFAULT_PHYSICS_TICKS * HEADLESS_SPEED_FACTOR
 
-	# read before the controllers change steering and throttle
+	# read the finished step before the controllers set their next inputs
 	process_physics_priority = -1
 	feedback = SumoStateFeedback.new(red_robot, blue_robot)
 	episode_count += 1
@@ -33,10 +35,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# keep the last result available until the scene is restarted
 	if match_finished:
 		return
 	if _last_delta == 0.0:
-		# no completed step yet
+		# the first call happens before physics has moved either robot
 		_last_delta = delta
 		return
 
@@ -45,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		winner = "red"
 	elif ring.winner == blue_robot:
 		winner = "blue"
-	# physics ran after the last call; use the duration from that call
+	# these positions came from the previous physics step, so use its delta
 	feedback.capture_step(
 		_last_delta, ring.robots.has(red_robot), ring.robots.has(blue_robot), winner
 	)

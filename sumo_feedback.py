@@ -10,6 +10,7 @@ STATUS_CODES = {"running": 0, "terminated": 1, "truncated": 2}
 
 
 def make_observation_space():
+    # scalars are 1-item arrays
     def robot_space():
         return spaces.Dict({
             "position": spaces.Box(-np.inf, np.inf, (3,), np.float32),
@@ -32,6 +33,7 @@ def make_observation_space():
 
 
 def make_state_space():
+    # discrete parts are one-hot once flattened
     flat = spaces.flatten_space(make_observation_space())
     return spaces.Box(
         flat.low.astype(np.float32), flat.high.astype(np.float32),
@@ -49,6 +51,7 @@ class FullStateFeedback:
         if snapshot["match"]["winner"] not in (None, *AGENTS):
             raise ValueError(f"unexpected winner: {snapshot['match']['winner']!r}")
         self._space = make_observation_space()
+        # catches bad shapes and ranges
         for agent in AGENTS:
             if not self._space.contains(self.observation(agent)):
                 raise ValueError(f"bad observation for {agent}")
@@ -69,7 +72,7 @@ class FullStateFeedback:
         }
 
     def state(self):
-        # fixed red / blue order
+        # red perspective only
         return spaces.flatten(
             self._space, self.observation("red")
         ).astype(np.float32)
@@ -143,6 +146,7 @@ class FullStateFeedback:
 
     def _check_reset(self):
         state = self._snapshot
+        # only valid for the step 0 snapshot
         if (state["step_id"] != 0 or state["elapsed_seconds"] != 0
                 or state["match"]["status"] != "running"):
             raise ValueError("reset needs the initial snapshot, before physics runs")

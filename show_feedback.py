@@ -5,6 +5,7 @@ from pprint import pprint
 
 from sumo_feedback import FullStateFeedback
 
+# use the sample unless a saved Godot JSON file is passed on the command line
 path = Path(__file__).parent / "examples" / "sample_state.json"
 if len(sys.argv) > 1:
     path = Path(sys.argv[1])

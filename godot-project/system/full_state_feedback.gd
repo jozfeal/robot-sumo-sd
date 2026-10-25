@@ -30,6 +30,7 @@ func capture_step(delta: float, red_in_ring: bool, blue_in_ring: bool, winner: S
 
 
 func get_state() -> Dictionary:
+	# return a copy so callers cant change the saved robot data
 	return _latest_state.duplicate(true)
 
 
@@ -67,16 +68,19 @@ func _capture(red_in_ring: bool, blue_in_ring: bool, status: String, winner: Str
 
 
 func _read_robot(robot: Robot, in_ring: bool) -> Dictionary:
+	# orthonormalized() drops any scale
 	var rotation := robot.global_basis.orthonormalized().get_rotation_quaternion()
 	return {
 		"position": _vector_array(robot.global_position),
+		# x, y, z, w
 		"rotation": [rotation.x, rotation.y, rotation.z, rotation.w],
 		"linear_velocity": _vector_array(robot.linear_velocity),
 		"angular_velocity": _vector_array(robot.angular_velocity),
-		# steering hasnt necessarily reached the requested angle yet
+		# steering lags the requested angle
 		"steering": robot.steering,
 		"engine_force": robot.engine_force,
 		"brake": robot.brake,
+		# from RingArea, same source as the win check
 		"inside_ring": in_ring,
 	}
 
