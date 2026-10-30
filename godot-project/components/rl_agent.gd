@@ -65,13 +65,9 @@ func _physics_process(_delta):
 
 ## Adds / Substracts from [member reward] based on current feedback.
 func calculate_rewards():
-	# Handles win/loss rewards
-	if feedback[0] == 1:
-		reward += 100
-	elif feedback[0] >= 2:
-		reward -= 100
-	elif feedback[0] == 0:
-		reward -= 5
+	# Don't calculate rewards after round ends
+	if done or needs_reset:
+		return
 	
 	# Positively rewards agent for being in advantageous position and vice versa
 	# Reward magnitude increases the closer the agent is to the edge itself

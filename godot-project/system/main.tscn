@@ -150,4 +150,5 @@ wait_time = 60.0
 one_shot = true
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
+[connection signal="round_over" from="RingArea" to="SimulationManager" method="_on_ring_area_round_over"]
 [connection signal="timeout" from="RoundTimer" to="SimulationManager" method="_on_round_timer_timeout"]

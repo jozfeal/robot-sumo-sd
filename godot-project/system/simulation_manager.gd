@@ -66,7 +66,13 @@ func start_simulation() -> void:
 	round_timer.start()
 
 func _on_round_timer_timeout() -> void:
+	if agent.done:
+		return
+	
 	StateFeedback.end_draw()
+	agent.done = true
+	agent.needs_reset = true
+	agent.reward -= 20
 
 # Waits for the Sync node to establish a connection with Python
 func _wait_for_sync():
@@ -76,3 +82,24 @@ func _wait_for_sync():
 	
 	if not sync.connected:
 		push_error("Failed to connect to Python!")
+
+
+func _on_ring_area_round_over() -> void:
+	if agent.done:
+		return
+	
+	agent.done = true
+	agent.needs_reset = true
+	
+	# Handles win/loss rewards
+	var feedback: Array = StateFeedback.get_feedback()
+	if feedback[0] == 1:
+		agent.reward += 100
+	elif feedback[0] >= 2:
+		agent.reward -= 100
+
+func _physics_process(_delta: float) -> void:
+	# Ensures the agent gets terminal rewards before restarting simulation
+	if agent.needs_reset and agent.done:
+		agent.reset()
+		start_simulation()
