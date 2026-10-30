@@ -40,8 +40,28 @@ func start_simulation() -> void:
 	# Gets all Robot type children of robot_holder and adds them to robots array
 	var robots: Array[Robot] = []
 	robots.assign(robot_holder.get_children().filter(func(child): return child is Robot))
+	var ring_radius: float = (ring_shape.shape as CylinderShape3D).radius
+	
+	# Spawns the robots in a random equivalent distance around the circle
+	# Helps prevent overfitting
+	var spawn_dist: float = randf_range(0.70, 0.55) * ring_radius
+	var random_spawn: Vector2 = Vector2.RIGHT.rotated(randf() * TAU) * spawn_dist
+	robots[0].global_position = Vector3(random_spawn.x, 0, random_spawn.y)
+	robots[1].global_position = Vector3(-random_spawn.x, 0 , -random_spawn.y)
+	# Aligns orientation so robot looks at center.
+	robots[0].look_at(Vector3.ZERO)
+	robots[0].rotate_y(deg_to_rad(180))
+	robots[1].look_at(Vector3.ZERO)
+	robots[1].rotate_y(deg_to_rad(180))
+	
+	robots[0].engine_force = 0
+	robots[0].steering = 0
+	robots[1].engine_force = 0
+	robots[1].steering = 0
+	
+	# Initialize StateFeedback values
 	StateFeedback.assign_robots(robots, robots.find(agent_robot))
-	StateFeedback.ring_radius = (ring_shape.shape as CylinderShape3D).radius
+	StateFeedback.ring_radius = ring_radius
 	
 	round_timer.start()
 
