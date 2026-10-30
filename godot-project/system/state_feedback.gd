@@ -23,6 +23,11 @@ func assign_robots(robots: Array[Robot], agent_index: int) -> void:
 func robot_lost(robot: Robot) -> void:
 	_robot_status[robot] = false
 
+## Ends the current round in a draw.
+func end_draw() -> void:
+	for robot: Robot in _robot_status:
+		robot_lost(robot)
+
 ## Returns a list containing all feedback.
 ## Call after all assignments, updates, and at the end of the physics tick.
 func get_feedback() -> Array:
