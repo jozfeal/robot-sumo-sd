@@ -14,7 +14,33 @@ var input_value: Vector2
 var feedback: Array
 
 func get_obs() -> Dictionary:
-	return {"obs":[]}
+	var obs: Array = []
+	for i in range(1, feedback.size()):
+		var state: Dictionary = feedback[i]
+		var temp
+		
+		# Include agent's position and rotation values
+		if i == 1:
+			temp = state["position"]
+			obs.append_array([temp.x, temp.y, temp.z])
+			temp = state["rotation"]
+			obs.append_array([temp.x, temp.y, temp.z])
+		
+		# Add all other robot state values to observations
+		obs.append(int(state["active"]))
+		obs.append(state["edge_distance"])
+		temp = state["relative_position"]
+		obs.append_array([temp.x, temp.y, temp.z])
+		temp = state["relative_rotation"]
+		obs.append_array([temp.x, temp.y, temp.z])
+		obs.append(state["engine_force"])
+		obs.append(state["steering"])
+		temp = state["linear_velocity"]
+		obs.append_array([temp.x, temp.y, temp.z])
+		temp = state["angular_velocity"]
+		obs.append_array([temp.x, temp.y, temp.z])
+	
+	return {"obs":obs}
 
 func get_reward() -> float:
 	return reward
@@ -58,14 +84,10 @@ func calculate_rewards():
 	elif feedback[1]["edge_distance"] < feedback[2]["edge_distance"] and StateFeedback.agent_blocked():
 		reward -= 0.2
 
-#-- Methods that can be overridden if needed --#
-
-#func get_obs_space() -> Dictionary:
-# May need overriding if the obs space is complex
-#	var obs = get_obs()
-#	return {
-#		"obs": {
-#			"size": [len(obs["obs"])],
-#			"space": "box"
-#		},
-#	}
+func get_obs_space() -> Dictionary:
+	return {
+		"obs": {
+			"size": [38],
+			"space": "box"
+		},
+	}
