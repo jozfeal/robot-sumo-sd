@@ -74,6 +74,10 @@ func calculate_rewards():
 	reward += (feedback[1]["edge_distance"] - feedback[2]["edge_distance"]) \
 			* (1 - feedback[1]["edge_distance"]) * 0.1
 	
+	# Provide rewards if the agent gets close to the opponent, based on training flaw observed
+	reward += ((StateFeedback.ring_radius ** 2) - (feedback[2]["relative_position"] as Vector3).length_squared()) \
+			* 0.2
+	
 	# Positively rewards if agent if blocking enemy's path to center and vice versa
 	if feedback[1]["edge_distance"] > feedback[2]["edge_distance"] and StateFeedback.agent_blocking():
 		reward += 0.2

@@ -143,6 +143,7 @@ metadata/_custom_type_script = "uid://dph5bymoc6lx0"
 
 [node name="Sync" type="Node" parent="." unique_id=1368255483]
 script = ExtResource("7_0hq6h")
+speed_up = 40.0
 metadata/_custom_type_script = "uid://miwarb81d837"
 
 [node name="RoundTimer" type="Timer" parent="." unique_id=1436952715]

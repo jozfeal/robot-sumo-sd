@@ -56,8 +56,12 @@ func start_simulation() -> void:
 	
 	robots[0].engine_force = 0
 	robots[0].steering = 0
+	robots[0].linear_velocity = Vector3.ZERO
+	robots[0].angular_velocity = Vector3.ZERO
 	robots[1].engine_force = 0
 	robots[1].steering = 0
+	robots[1].linear_velocity = Vector3.ZERO
+	robots[1].angular_velocity = Vector3.ZERO
 	
 	# Initialize StateFeedback values
 	StateFeedback.assign_robots(robots, robots.find(agent_robot))
