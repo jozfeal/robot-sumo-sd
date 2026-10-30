@@ -10,6 +10,7 @@ extends Node
 ## [CollisionShape] that determines the ring size.
 @export var ring_shape: CollisionShape3D
 @export var round_timer: Timer
+@export var sync: Sync
 
 ## Speed up factor for the physics ticks when running in headless mode.
 var HEADLESS_SPEED_FACTOR: float = 10.0
@@ -17,6 +18,8 @@ var DEFAULT_PHYSICS_TICKS: int = 60
 
 func _ready() -> void:
 	assert(agent_robot != null, "agent_robot not assigned in SimulationManager.")
+	# Wait for the Sync node to connect
+	call_deferred("_wait_for_sync")
 	start_simulation()
 	
 	# If the simulation is in headless mode, uncap fps for RL training
@@ -44,3 +47,12 @@ func start_simulation() -> void:
 
 func _on_round_timer_timeout() -> void:
 	StateFeedback.end_draw()
+
+# Waits for the Sync node to establish a connection with Python
+func _wait_for_sync():
+	# Wait for Sync initialization to finish
+	while not sync.initialized:
+		await get_tree().process_frame
+	
+	if not sync.connected:
+		push_error("Failed to connect to Python!")

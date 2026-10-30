@@ -37,13 +37,14 @@ outline_size = 20
 
 [node name="Main" type="Node3D" unique_id=2034509664]
 
-[node name="SimulationManager" type="Node" parent="." unique_id=1753323360 node_paths=PackedStringArray("agent", "agent_robot", "robot_holder", "ring_shape", "round_timer")]
+[node name="SimulationManager" type="Node" parent="." unique_id=1753323360 node_paths=PackedStringArray("agent", "agent_robot", "robot_holder", "ring_shape", "round_timer", "sync")]
 script = ExtResource("1_tuma4")
 agent = NodePath("../RLAgent")
 agent_robot = NodePath("../Robots/BlueRobot")
 robot_holder = NodePath("../Robots")
 ring_shape = NodePath("../RingArea/CollisionShape3D")
 round_timer = NodePath("../RoundTimer")
+sync = NodePath("../Sync")
 metadata/_custom_type_script = "uid://c50ew7fq7as4v"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1673052068]
