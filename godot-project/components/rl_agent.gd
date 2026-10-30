@@ -1,29 +1,35 @@
+class_name RLAgent
 extends AIController3D
 
+@export_group("Nodes")
+## [RobotController] that this agent is sending input to.
+@export var controller: RobotController
+@export_group("")
+
+## The robot's input values with x for throttle and y for steering.
+## Sould as a parameter to [method RobotController.receive_input].
+var input_value: Vector2
+
 func get_obs() -> Dictionary:
-	assert(false, "the get_obs method is not implemented when extending from ai_controller") 
 	return {"obs":[]}
 
-func get_reward() -> float:	
-	assert(false, "the get_reward method is not implemented when extending from ai_controller") 
+func get_reward() -> float:
 	return 0.0
-	
+
 func get_action_space() -> Dictionary:
-	assert(false, "the get get_action_space method is not implemented when extending from ai_controller") 
 	return {
-		"example_actions_continous" : {
+		"input" : {
 			"size": 2,
 			"action_type": "continuous"
-		},
-		"example_actions_discrete" : {
-			"size": 2,
-			"action_type": "discrete"
-		},
 		}
-	
-func set_action(action) -> void:	
-	assert(false, "the get set_action method is not implemented when extending from ai_controller") 	
-# -----------------------------------------------------------------------------#
+	}
+
+func set_action(action) -> void:
+	input_value.x = action["input"][0]
+	input_value.y = action["input"][1]
+
+func _physics_process(_delta):
+	controller.receive_input(input_value)
 
 #-- Methods that can be overridden if needed --#
 

@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
 [ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robots/robot_controller.gd" id="5_tuma4"]
+[ext_resource type="Script" uid="uid://dph5bymoc6lx0" path="res://components/rl_agent.gd" id="6_kmnl7"]
+[ext_resource type="Script" uid="uid://miwarb81d837" path="res://addons/godot_rl_agents/sync.gd" id="7_0hq6h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cyina"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -129,5 +131,14 @@ input_right = "p2_right"
 robot = NodePath("../Robots/RedRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
+
+[node name="RLAgent" type="Node3D" parent="." unique_id=386915892 node_paths=PackedStringArray("controller")]
+script = ExtResource("6_kmnl7")
+controller = NodePath("../BlueController")
+metadata/_custom_type_script = "uid://dph5bymoc6lx0"
+
+[node name="Sync" type="Node" parent="." unique_id=1368255483]
+script = ExtResource("7_0hq6h")
+metadata/_custom_type_script = "uid://miwarb81d837"
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
