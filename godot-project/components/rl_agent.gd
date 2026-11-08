@@ -13,6 +13,9 @@ var input_value: Vector2
 ## Feedback from last frame.
 var feedback: Array
 
+# Used for reward calculation
+var previous_enemy_distance: float
+
 func get_obs() -> Dictionary:
 	var obs: Array = []
 	for i in range(1, feedback.size()):
@@ -27,18 +30,11 @@ func get_obs() -> Dictionary:
 			obs.append_array([temp.x, temp.y, temp.z])
 		
 		# Add all other robot state values to observations
-		obs.append(int(state["active"]))
 		obs.append(state["edge_distance"])
 		temp = state["relative_position"]
 		obs.append_array([temp.x, temp.y, temp.z])
-		temp = state["relative_rotation"]
-		obs.append_array([temp.x, temp.y, temp.z])
 		obs.append(state["engine_force"])
 		obs.append(state["steering"])
-		temp = state["linear_velocity"]
-		obs.append_array([temp.x, temp.y, temp.z])
-		temp = state["angular_velocity"]
-		obs.append_array([temp.x, temp.y, temp.z])
 	
 	return {"obs":obs}
 
@@ -47,15 +43,22 @@ func get_reward() -> float:
 
 func get_action_space() -> Dictionary:
 	return {
-		"input" : {
-			"size": 2,
-			"action_type": "continuous"
+		# Discrete action space of 3 for backward, forward, or none
+		"throttle" : {
+			"size": 3,
+			"action_type": "discrete"
+		},
+		# Discrete action space of 3 for left, right, or none
+		"steering" : {
+			"size": 3,
+			"action_type": "discrete"
 		}
 	}
 
 func set_action(action) -> void:
-	input_value.x = action["input"][0]
-	input_value.y = action["input"][1]
+	# Converts the actions into a choice of [-1, 0, 1] for throttle and steer
+	input_value.x = int(action["throttle"]) - 1
+	input_value.y = int(action["steering"]) - 1
 
 func _physics_process(_delta):
 	controller.receive_input(input_value)
@@ -69,25 +72,15 @@ func calculate_rewards():
 	if done or needs_reset:
 		return
 	
-	# Positively rewards agent for being in advantageous position and vice versa
-	# Reward magnitude increases the closer the agent is to the edge itself
-	reward += (feedback[1]["edge_distance"] - feedback[2]["edge_distance"]) \
-			* (1 - feedback[1]["edge_distance"]) * 0.1
-	
-	# Provide rewards if the agent gets close to the opponent, based on training flaw observed
-	reward += ((StateFeedback.ring_radius ** 2) - (feedback[2]["relative_position"] as Vector3).length_squared()) \
-			* 0.2
-	
-	# Positively rewards if agent if blocking enemy's path to center and vice versa
-	if feedback[1]["edge_distance"] > feedback[2]["edge_distance"] and StateFeedback.agent_blocking():
-		reward += 0.2
-	elif feedback[1]["edge_distance"] < feedback[2]["edge_distance"] and StateFeedback.agent_blocked():
-		reward -= 0.2
+	# Positively rewards the agent for making progress moving towards the enemy
+	var current_enemy_distance: float = (feedback[2]["relative_position"] as Vector3).length_squared()
+	reward += (previous_enemy_distance - current_enemy_distance) * 0.2
+	previous_enemy_distance = current_enemy_distance
 
 func get_obs_space() -> Dictionary:
 	return {
 		"obs": {
-			"size": [38],
+			"size": [18],
 			"space": "box"
 		},
 	}

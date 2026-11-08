@@ -147,7 +147,7 @@ speed_up = 40.0
 metadata/_custom_type_script = "uid://miwarb81d837"
 
 [node name="RoundTimer" type="Timer" parent="." unique_id=1436952715]
-wait_time = 60.0
+wait_time = 240.0
 one_shot = true
 
 [connection signal="body_exited" from="RingArea" to="RingArea" method="_on_body_exited"]
