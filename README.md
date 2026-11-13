@@ -41,9 +41,21 @@ py training_terface.py
 ```
 To perform a headless training run, first make sure the latest version of the simulation is exported. You can run the training with:
 ```
-py training_interface.py --env_path="simulation.exe" --n_parallel=4 --speedup=10 --timesteps=1000000 --experiment_name="name"
+py training_interface.py --env_path=simulation.exe --n_parallel=4 --speedup=10 --timesteps=1000000
 ```
 There are additional command line arguments to save training checkpoints and other utilities which have not been fully implemented yet, so training will currently just run until `timesteps` is reached or when it is stopped with `Ctrl + C`. All parameter values can be changed. To visually see training, you can add an additional command line parameter, `--viz`, which removes headless mode for the simulation. When visualizing training, it is better to run only one instance of the simulation:
 ```
-py training_interface.py --env_path="simulation.exe" --n_parallel=1 --speedup=10 --timesteps=1000000 --experiment_name="name" --viz
+py training_interface.py --env_path=simulation.exe --n_parallel=1 --speedup=10 --timesteps=1000000 --viz
 ```
+
+# Saving Progress and Exporting Models
+To make checkpoints during training, the experiment name must be unique. One can use an automatically generated experiment name or name the experiment with the `experiment_name=name` argument. If a folder with the experiment name already exists, `training_interface.py` will throw an error. Ensure the experiment name is unique and/or that the previous folder with that name has been deleted before running a training experiment.
+
+## Saving the Model
+When running `training_interface.py`, the following arguments can be added to save and resume model training progress.
+- `--save_model_path=model.zip` determines the .zip folder under which the model is saved. Including this argument ensures a final checkpoint is created at the end of training or when training is stopped with `Ctrl + C`.
+- `--save_checkpoint_frequency=50_000` will save an instance of the model after every 50,000 timesteps.
+- `--resume_model_path=model.zip` will run a new training experiment by loading the model in the .zip directory and resuming with its current weights / structure. A model can be loaded for testing and ran with the `--inference` argument to prevent its weights from updating.
+
+## Exporting the Model
+One can export the model in ONNX format for other uses, such as visualization or testing. An ONNX model path can also be passed as an argument in Godot's Sync node to test an already trained model inside the Godot editor. Exporting to ONNX will only occur once training completes by reaching its maximum timesteps or when training is stopped with `Ctrl + C`. To export the ONNX model, simply add the argument `--onnx_export_path=model.onnx`.
