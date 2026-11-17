@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cxcdhmexqjrda"]
+
+[ext_resource type="PackedScene" uid="uid://dhpdr6wrhote3" path="res://meshes/robot.glb" id="1_af6li"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnorv"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_af6li"]
+albedo_color = Color(0.5985247, 0.59852463, 0.59852463, 1)
+metallic = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_udoac"]
+albedo_color = Color(0.22670749, 0.22670749, 0.22670746, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etylf"]
+albedo_color = Color(0.85463405, 0.8546339, 0.8546339, 1)
+
+[node name="MiniRobot" unique_id=714543535 instance=ExtResource("1_af6li")]
+
+[node name="Chassis" parent="." index="0" unique_id=1973807958]
+material_override = SubResource("StandardMaterial3D_fnorv")
+
+[node name="Scoop" parent="." index="1" unique_id=1500465421]
+material_override = SubResource("StandardMaterial3D_af6li")
+
+[node name="Shafts" parent="." index="2" unique_id=1316320917]
+material_override = SubResource("StandardMaterial3D_udoac")
+
+[node name="Wheels" parent="." index="3" unique_id=1082269583]
+material_override = SubResource("StandardMaterial3D_etylf")
