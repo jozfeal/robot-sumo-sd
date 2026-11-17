@@ -32,7 +32,7 @@ enum InputMode {
 @export_group("")
 
 # Current input values to process in _physics_process.
-# X corresponds to steering, Y corresponds to engine throttle.
+# X corresponds to left wheel throttle, Y corresponds to right wheel throttle.
 var _input: Vector2 = Vector2.ZERO
 
 ## Maximum degrees in degrees the steering wheels are able to turn.

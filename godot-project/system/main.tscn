@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
 [ext_resource type="Script" uid="uid://c50ew7fq7as4v" path="res://system/simulation_manager.gd" id="1_tuma4"]
-[ext_resource type="PackedScene" uid="uid://c07dkdxs2thr" path="res://robots/base_robot.tscn" id="2_gisfo"]
+[ext_resource type="PackedScene" uid="uid://cxcdhmexqjrda" path="res://robots/mini_robot.tscn" id="3_7rmty"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
 [ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robots/robot_controller.gd" id="5_tuma4"]
 [ext_resource type="Script" uid="uid://dph5bymoc6lx0" path="res://components/rl_agent.gd" id="6_kmnl7"]
@@ -29,7 +29,7 @@ data = PackedVector3Array(-12.5, -0.5, 12.5, -12.5, -0.5, -12.5, -12.5, 0.5, -12
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
 height = 20.0
-radius = 10.0
+radius = 0.795
 
 [sub_resource type="LabelSettings" id="LabelSettings_xrivr"]
 font_size = 90
@@ -57,14 +57,14 @@ shadow_enabled = true
 [node name="World" type="StaticBody3D" parent="." unique_id=1883173728]
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="World" unique_id=1115049733]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
-radius = 10.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.499, 0)
+radius = 0.795
 height = 1.0
 sides = 50
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="World/CSGCylinder3D" unique_id=2039781943]
 operation = 2
-radius = 9.5
+radius = 0.77
 height = 1.0
 sides = 50
 
@@ -78,19 +78,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ConcavePolygonShape3D_goxoi")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1823601430]
-transform = Transform3D(-0.70710677, 0.61237246, -0.35355335, 0, 0.49999997, 0.86602545, 0.70710677, 0.61237246, -0.35355335, -7, 11, -7)
+transform = Transform3D(-0.7071068, 0.61237246, -0.35355335, 0, 0.49999997, 0.86602545, 0.7071068, 0.61237246, -0.35355335, -0.5, 0.8, -0.5)
 
 [node name="Robots" type="Node" parent="." unique_id=1247978935]
 
-[node name="RedRobot" parent="Robots" unique_id=651725520 instance=ExtResource("2_gisfo")]
-transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -3.4664612, 0, 4.353595)
-robot_name = "Red"
-color = Color(0.9998551, 0.36102337, 0.29374388, 1)
+[node name="BlueRobot" parent="Robots" unique_id=1761770149 instance=ExtResource("3_7rmty")]
+transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -0.1064477, 0, -2.5493498)
+color = Color(0.033261046, 0.495261, 0.6772148, 1)
 
-[node name="BlueRobot" parent="Robots" unique_id=1119450236 instance=ExtResource("2_gisfo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8750362)
-robot_name = "Blue"
-color = Color(0.3527628, 0.5527516, 1, 1)
+[node name="RedRobot" parent="Robots" unique_id=594161987 instance=ExtResource("3_7rmty")]
+transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -0.1064477, 0, 1.04392)
+color = Color(0.9411804, 0.3211986, 0.3742855, 1)
 
 [node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots", "win_text")]
 monitorable = false
@@ -143,7 +141,7 @@ metadata/_custom_type_script = "uid://dph5bymoc6lx0"
 
 [node name="Sync" type="Node" parent="." unique_id=1368255483]
 script = ExtResource("7_0hq6h")
-speed_up = 40.0
+control_mode = 0
 metadata/_custom_type_script = "uid://miwarb81d837"
 
 [node name="RoundTimer" type="Timer" parent="." unique_id=1436952715]

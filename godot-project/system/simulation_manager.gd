@@ -41,9 +41,7 @@ func start_simulation() -> void:
 	robots[1].global_position = Vector3(-random_spawn.x, 0 , -random_spawn.y)
 	# Aligns orientation so robot looks at center.
 	robots[0].look_at(Vector3.ZERO)
-	robots[0].rotate_y(deg_to_rad(180))
 	robots[1].look_at(Vector3.ZERO)
-	robots[1].rotate_y(deg_to_rad(180))
 	
 	robots[0].engine_force = 0
 	robots[0].steering = 0
