@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://i3jtb228g4p1"]
 
 [ext_resource type="ArrayMesh" uid="uid://dfbr4sv27ass2" path="res://meshes/chassis_mesh.res" id="1_kwl0w"]
-[ext_resource type="Script" uid="uid://xi6hgi140n0y" path="res://robots/differential_drive_robot.gd" id="1_ue63x"]
+[ext_resource type="Script" uid="uid://xi6hgi140n0y" path="res://robots/robot.gd" id="1_ue63x"]
 [ext_resource type="ArrayMesh" uid="uid://bymfuinas5kcy" path="res://meshes/scoop_mesh.res" id="2_pbs18"]
 [ext_resource type="ArrayMesh" uid="uid://6gh5nbskc2e6" path="res://meshes/shafts_mesh.res" id="3_ue63x"]
 [ext_resource type="ArrayMesh" uid="uid://byowepxuxnh88" path="res://meshes/left_wheel_mesh.res" id="4_plr8t"]

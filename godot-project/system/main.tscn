@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
 [ext_resource type="Script" uid="uid://c50ew7fq7as4v" path="res://system/simulation_manager.gd" id="1_tuma4"]
-[ext_resource type="PackedScene" uid="uid://i3jtb228g4p1" path="res://robots/differential_drive_robot.tscn" id="4_7rmty"]
+[ext_resource type="PackedScene" uid="uid://i3jtb228g4p1" path="res://robots/robot.tscn" id="4_7rmty"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
 [ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robots/robot_controller.gd" id="5_tuma4"]
 [ext_resource type="Script" uid="uid://dph5bymoc6lx0" path="res://components/rl_agent.gd" id="6_kmnl7"]

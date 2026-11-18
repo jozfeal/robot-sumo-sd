@@ -1,8 +1,10 @@
 class_name Robot
 extends Node3D
 
-@export var max_wheel_speed: float = 20.0   # rad/s; ground speed = this * wheel radius
-@export var motor_max_impulse: float = 0.01 # motor strength per physics step; tune this
+## How much the wheel is able to spin, essentially the torque of the motor.
+@export var max_wheel_speed: float = 65.0
+## The force applied by the motor.
+@export var motor_max_impulse: float = 0.01
 
 @export_group("Nodes")
 ## Robot's chassis body.
