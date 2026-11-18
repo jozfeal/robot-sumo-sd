@@ -21,16 +21,35 @@ extends Node3D
 @export var color_mesh: MeshInstance3D
 @export_group("")
 
+## Color of the robot's chassis.
 @export var color: Color
+
+# List of all physics components making up the robot.
+var physics_components: Array[Node3D]
+# Dictionary with each component's default local transform.
+var component_transforms: Dictionary
 
 func _ready() -> void:
 	color_mesh.material_override.albedo_color = color
+	physics_components = [chassis, left_wheel, right_wheel, left_hinge, right_hinge]
+	for component: Node3D in physics_components:
+		component_transforms[component] = component.transform
 	
+	# Sets up hinges to work as motors
 	for hinge in [left_hinge, right_hinge]:
 		hinge.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, true)
 		hinge.set_param(HingeJoint3D.PARAM_MOTOR_MAX_IMPULSE, motor_max_impulse)
 
+## Spins the wheels based on [param left] and [param right] parameters.
 func set_drive(left: float, right: float) -> void:
-	# left/right in [-1, 1]
 	left_hinge.set_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY, -left * max_wheel_speed)
 	right_hinge.set_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY, -right * max_wheel_speed)
+
+## Teleports the robot to the given position.
+## Use this instead of setting [member global_position].
+func teleport(to: Vector3) -> void:
+	global_position = to
+	for component: Node3D in physics_components:
+		component.transform = component_transforms[component]
+	chassis.linear_velocity = Vector3.ZERO
+	chassis.angular_velocity = Vector3.ZERO

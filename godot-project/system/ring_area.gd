@@ -11,10 +11,9 @@ func _ready() -> void:
 		robots_chassis.append(robot.chassis)
 
 func _on_body_exited(body: Node3D) -> void:
-	if body is RigidBody3D:
-		robots_chassis.erase(body)
+	if body is RigidBody3D and robots_chassis.has(body):
+		robots.erase(body.get_parent())
 		StateFeedback.robot_lost(body.get_parent())
 		
 		if robots.size() <= 1:
 			round_over.emit()
-			print("done")
