@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dh55vx8mutj0k" path="res://textures/prototype_grey.png" id="1_7am6p"]
 [ext_resource type="Script" uid="uid://c50ew7fq7as4v" path="res://system/simulation_manager.gd" id="1_tuma4"]
-[ext_resource type="PackedScene" uid="uid://cxcdhmexqjrda" path="res://robots/mini_robot.tscn" id="3_7rmty"]
 [ext_resource type="PackedScene" uid="uid://i3jtb228g4p1" path="res://robots/differential_drive_robot.tscn" id="4_7rmty"]
 [ext_resource type="Script" uid="uid://cr5xd7drbfnew" path="res://system/ring_area.gd" id="4_goxoi"]
 [ext_resource type="Script" uid="uid://x6xqirqhn2qu" path="res://robots/robot_controller.gd" id="5_tuma4"]
@@ -84,15 +83,13 @@ transform = Transform3D(-0.7071068, 0.61237246, -0.35355335, 0, 0.49999997, 0.86
 
 [node name="Robots" type="Node" parent="." unique_id=1247978935]
 
-[node name="BlueRobot" parent="Robots" unique_id=1761770149 instance=ExtResource("3_7rmty")]
-transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -0.1064477, 0, -2.5493498)
-color = Color(0.033261046, 0.495261, 0.6772148, 1)
+[node name="BlueRobot" parent="Robots" unique_id=1934955016 instance=ExtResource("4_7rmty")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 1.6909351, 0, 3.521679)
+color = Color(0.23092607, 0.65802974, 0.97532994, 1)
 
-[node name="RedRobot" parent="Robots" unique_id=594161987 instance=ExtResource("3_7rmty")]
-transform = Transform3D(-0.5634239, 0, 0.826168, 0, 1, 0, -0.826168, 0, -0.5634239, -0.1064477, 0, 1.04392)
-color = Color(0.9411804, 0.3211986, 0.3742855, 1)
-
-[node name="DifferentialDriveRobot" parent="Robots" unique_id=1934955016 instance=ExtResource("4_7rmty")]
+[node name="RedRobot" parent="Robots" unique_id=1882539363 instance=ExtResource("4_7rmty")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, -4.2180185)
+color = Color(0.9612724, 0.38545647, 0.37467715, 1)
 
 [node name="RingArea" type="Area3D" parent="." unique_id=672496366 node_paths=PackedStringArray("robots", "win_text")]
 monitorable = false
@@ -124,14 +121,13 @@ robot = NodePath("../Robots/BlueRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
-[node name="RedController2" type="Node" parent="." unique_id=1510759221 node_paths=PackedStringArray("robot", "diff_rob")]
+[node name="RedController" type="Node" parent="." unique_id=1510759221 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_tuma4")
 input_left_fwd = "p1_left_fwd"
 input_left_bwd = "p1_left_bwd"
 input_right_fwd = "p1_right_fwd"
 input_right_bwd = "p1_right_bwd"
 robot = NodePath("../Robots/RedRobot")
-diff_rob = NodePath("../Robots/DifferentialDriveRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 

@@ -52,10 +52,6 @@ func get_feedback() -> Array:
 		state["relative_position"] = robot.global_position - agent.global_position
 		state["rotation"] = robot.rotation
 		state["relative_rotation"] = robot.rotation - agent.rotation
-		state["engine_force"] = robot.engine_force
-		state["steering"] = robot.steering
-		state["linear_velocity"] = robot.linear_velocity
-		state["angular_velocity"] = robot.angular_velocity
 		feedback.append(state)
 	return feedback
 

@@ -29,7 +29,6 @@ enum InputMode {
 @export_group("Nodes")
 ## Robot that this controller is assigned to.
 @export var robot: Robot
-@export var diff_rob: DiffDriveRobot
 @export_group("")
 
 # Current input values to process in _physics_process.
@@ -66,11 +65,4 @@ func _physics_process(_delta: float) -> void:
 		_input = Vector2(Input.get_axis(input_left_fwd, input_left_bwd), \
 				Input.get_axis(input_right_fwd, input_right_bwd))
 	
-	#var max_rads: float = deg_to_rad(max_steer)
-	#robot.steering = move_toward(robot.steering, _inputss.x * max_rads, delta * turn_speed)
-	#robot.engine_force = _input.y * engine_power
-	#robot.left_wheel.engine_force = _input.x * max_wheel_force
-	#robot.right_wheel.engine_force = _input.y * max_wheel_force
-	
-	if diff_rob:
-		diff_rob.set_drive(_input.x, _input.y)
+	robot.set_drive(_input.x, _input.y)

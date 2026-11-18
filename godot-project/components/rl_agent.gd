@@ -33,8 +33,6 @@ func get_obs() -> Dictionary:
 		obs.append(state["edge_distance"])
 		temp = state["relative_position"]
 		obs.append_array([temp.x, temp.y, temp.z])
-		obs.append(state["engine_force"])
-		obs.append(state["steering"])
 	
 	return {"obs":obs}
 
@@ -80,7 +78,7 @@ func calculate_rewards():
 func get_obs_space() -> Dictionary:
 	return {
 		"obs": {
-			"size": [18],
+			"size": [14],
 			"space": "box"
 		},
 	}
