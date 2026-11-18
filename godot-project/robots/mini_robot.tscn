@@ -45,6 +45,7 @@ metadata/_custom_type_script = "uid://c14rsrpxe1doh"
 
 [node name="LeftWheel" type="VehicleWheel3D" parent="." unique_id=863188796]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.035, 0.015, 0.054)
+engine_force = 2.0
 wheel_roll_influence = 1.0
 wheel_radius = 0.015
 wheel_rest_length = 0.002
@@ -57,6 +58,7 @@ damping_relaxation = 0.5
 
 [node name="RightWheel" type="VehicleWheel3D" parent="." unique_id=1580852354]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035, 0.015, 0.054)
+engine_force = 2.0
 wheel_roll_influence = 1.0
 wheel_radius = 0.015
 wheel_rest_length = 0.002

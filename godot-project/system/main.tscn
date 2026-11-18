@@ -116,20 +116,16 @@ vertical_alignment = 1
 [node name="BlueController" type="Node" parent="." unique_id=1308884516 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_tuma4")
 input_mode = 1
-input_forward = "p1_forward"
-input_backward = "p1_backward"
-input_left = "p1_left"
-input_right = "p1_right"
 robot = NodePath("../Robots/BlueRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [node name="RedController" type="Node" parent="." unique_id=1710127970 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_tuma4")
-input_forward = "p2_forward"
-input_backward = "p2_backward"
-input_left = "p2_left"
-input_right = "p2_right"
+input_left_fwd = "p1_left_fwd"
+input_left_bwd = "p1_left_bwd"
+input_right_fwd = "p1_right_fwd"
+input_right_bwd = "p1_right_bwd"
 robot = NodePath("../Robots/RedRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
