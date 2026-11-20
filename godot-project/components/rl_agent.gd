@@ -13,9 +13,6 @@ var input_value: Vector2
 ## Feedback from last frame.
 var feedback: Array
 
-# Used for reward calculation
-var previous_enemy_distance: float
-
 func get_obs() -> Dictionary:
 	var obs: Array = []
 	
@@ -85,11 +82,6 @@ func calculate_rewards():
 	# Don't calculate rewards after round ends
 	if done or needs_reset:
 		return
-	
-	# Positively rewards the agent for making progress moving towards the enemy
-	var current_enemy_distance: float = (feedback[2]["relative_position"] as Vector3).length_squared()
-	reward += (previous_enemy_distance - current_enemy_distance) * 0.2
-	previous_enemy_distance = current_enemy_distance
 
 func get_obs_space() -> Dictionary:
 	return {

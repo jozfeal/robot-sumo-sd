@@ -47,11 +47,6 @@ func start_simulation() -> void:
 	StateFeedback.assign_robots(robots)
 	StateFeedback.ring_radius = ring_radius
 	
-	# Initialize enemy distance for rewards
-	for a: RLAgent in agents:
-		a.previous_enemy_distance = \
-				(StateFeedback.get_feedback(a.controller.robot)[2]["relative_position"] as Vector3).length_squared()
-	
 	round_timer.start()
 
 func _on_round_timer_timeout() -> void:
