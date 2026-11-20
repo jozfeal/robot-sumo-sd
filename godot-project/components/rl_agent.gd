@@ -22,12 +22,14 @@ func get_obs() -> Dictionary:
 		var state: Dictionary = feedback[i]
 		var temp
 		
-		# Include agent's position and rotation values
+		# Include agent's position and rotation values, along with its own movement
 		if i == 1:
 			temp = state["position"]
 			obs.append_array([temp.x, temp.y, temp.z])
 			temp = state["rotation"]
 			obs.append_array([temp.x, temp.y, temp.z])
+			obs.append(state["left_wheel_speed"])
+			obs.append(state["right_wheel_speed"])
 		
 		# Add all other robot state values to observations
 		obs.append(state["edge_distance"])
@@ -46,7 +48,7 @@ func get_action_space() -> Dictionary:
 			"size": 3,
 			"action_type": "discrete"
 		},
-		# Discrete action space of 3 for left, right, or none
+		# Discrete action space of 3 for backward, forward or none
 		"right_wheel" : {
 			"size": 3,
 			"action_type": "discrete"
@@ -78,7 +80,7 @@ func calculate_rewards():
 func get_obs_space() -> Dictionary:
 	return {
 		"obs": {
-			"size": [14],
+			"size": [16],
 			"space": "box"
 		},
 	}

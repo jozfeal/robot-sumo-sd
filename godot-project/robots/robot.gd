@@ -53,3 +53,23 @@ func teleport(to: Vector3) -> void:
 		component.transform = component_transforms[component]
 	chassis.linear_velocity = Vector3.ZERO
 	chassis.angular_velocity = Vector3.ZERO
+
+## Returns global transform of the chassis, repesenting the robot's visual position.
+func get_visual_transform() -> Transform3D:
+	return chassis.global_transform
+
+## Returns the linear velocity of the chassis, representing the robot's visual linear velocity.
+func get_visual_linear_velocity() -> Vector3:
+	return chassis.linear_velocity
+
+## Returns the angular velocity of the chassis, representing the robot's visual linear velocity.
+func get_visual_angular_velocity() -> Vector3:
+	return chassis.angular_velocity
+
+## Returns the left wheel's wheel speed.
+func get_left_wheel_speed() -> float:
+	return left_hinge.get_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY)
+
+## Returns the right wheel's wheel speed.
+func get_right_wheel_speed() -> float:
+	return right_hinge.get_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY)
