@@ -2,8 +2,6 @@ extends Node
 
 ## Radius of the ring, used for normalization.
 var ring_radius: float = 10
-## Robot that the agent controls.
-var agent: Robot
 
 # Stores the robots in the match as keys, and their match status as value.
 # When a robot is eliminated from the match its value becomes false.
@@ -11,11 +9,8 @@ var _robot_status: Dictionary
 
 ## Stores an internal dictionary of robots and marks them all as active.
 ## [param agent_index] is the index of the agent's robot inside [param robots].
-func assign_robots(robots: Array[Robot], agent_index: int) -> void:
+func assign_robots(robots: Array[Robot]) -> void:
 	_robot_status.clear()
-	# Make the agent the first entry of _robot_status
-	agent = robots.pop_at(agent_index)
-	robots.push_front(agent)
 	for r: Robot in robots:
 		_robot_status[r] = true
 
@@ -30,7 +25,7 @@ func end_draw() -> void:
 
 ## Returns a list containing all feedback.
 ## Call after all assignments, updates, and at the end of the physics tick.
-func get_feedback() -> Array:
+func get_feedback(agent: Robot) -> Array:
 	# Makes feedback[0] 0 for a draw, -1 for an ongoing match, or the index of the winner
 	# Index is in reference to the feedback array, with 1 being the agent robot
 	var feedback: Array = [-1]
@@ -45,6 +40,7 @@ func get_feedback() -> Array:
 	# Adds an entry to feedback for each robot with their state
 	for robot: Robot in _robot_status:
 		var state: Dictionary
+		state["robot"] = robot
 		# Get all the properties from the robot
 		state["active"] = _robot_status[robot]
 		state["edge_distance"] = (ring_radius - robot.get_visual_transform().origin.length()) / ring_radius
@@ -62,7 +58,7 @@ func get_feedback() -> Array:
 	return feedback
 
 ## Returns true if the agent robot is blocked by another robot.
-func agent_blocked() -> bool:
+func agent_blocked(agent: Robot) -> bool:
 	for robot: Robot in _robot_status:
 		if robot == agent:
 			continue
@@ -72,7 +68,7 @@ func agent_blocked() -> bool:
 	return false
 
 ## Returns true if the agent robot is blocking another robot.
-func agent_blocking() -> bool:
+func agent_blocking(agent: Robot) -> bool:
 	for robot: Robot in _robot_status:
 		if robot == agent:
 			continue

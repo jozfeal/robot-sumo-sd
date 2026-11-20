@@ -1,8 +1,8 @@
 class_name SimulationManager
 extends Node
 
-## [RLAgent].
-@export var agent: RLAgent
+## All [RLAgent]s being trained.
+@export var agents: Array[RLAgent]
 ## Robot assigned to the training agent.
 @export var agent_robot: Robot
 ## Node holding all robots in simulation as children.
@@ -43,23 +43,20 @@ func start_simulation() -> void:
 	robots[0].look_at(Vector3.ZERO)
 	robots[1].look_at(Vector3.ZERO)
 	
-	# Initialize StateFeedback values
-	StateFeedback.assign_robots(robots, robots.find(agent_robot))
-	StateFeedback.ring_radius = ring_radius
+	for agent: RLAgent in agents:
+		agent.last_distance_squared = 0
 	
-	# Initialize enemy distance for rewards
-	agent.previous_enemy_distance = \
-			(StateFeedback.get_feedback()[2]["relative_position"] as Vector3).length_squared()
+	# Initialize StateFeedback values
+	StateFeedback.assign_robots(robots)
+	StateFeedback.ring_radius = ring_radius
 	
 	round_timer.start()
 
 func _on_round_timer_timeout() -> void:
-	if agent.done:
+	if all_agents_done():
 		return
-	
 	StateFeedback.end_draw()
-	agent.done = true
-	agent.needs_reset = true
+	set_agents_done()
 
 # Waits for the Sync node to establish a connection with Python
 func _wait_for_sync():
@@ -75,21 +72,39 @@ func _on_ring_area_round_over() -> void:
 	if sync.control_mode == Sync.ControlModes.HUMAN:
 		start_simulation()
 	
-	if agent.done:
+	if all_agents_done():
 		return
+	set_agents_done()
 	
-	agent.done = true
-	agent.needs_reset = true
-	
-	# Handles win/loss rewards
-	var feedback: Array = StateFeedback.get_feedback()
-	if feedback[0] == 1:
-		agent.reward += 100
-	elif feedback[0] >= 2:
-		agent.reward -= 100
+	# Gives +100 reward to agents who are active at round end, and -100 otherwise
+	# Results in -100 rewards for all agents on draw
+	#for agent: RLAgent in agents:
+		#var feedback: Array = StateFeedback.get_feedback(agent.controller.robot)
+		#for i in range(1, feedback.size()):
+			#var state: Dictionary = feedback[i]
+			#if state["robot"] == agent.controller.robot:
+				#if state["active"]:
+					#agent.reward += 100
+				#else:
+					#agent.reward -= 100
+				#break
 
 func _physics_process(_delta: float) -> void:
-	# Ensures the agent gets terminal rewards before restarting simulation
-	if agent.needs_reset and agent.done:
-		agent.reset()
+	# Ensures the agents gets terminal rewards before restarting simulation
+	if all_agents_done():
+		for agent: RLAgent in agents:
+			agent.reset()
 		start_simulation()
+
+## Sets the done and reset flags on all simulation agents.
+func set_agents_done(done: bool = true) -> void:
+	for agent: RLAgent in agents:
+		agent.done = true
+		agent.needs_reset = true
+
+## Checks that all agents are done.
+func all_agents_done() -> bool:
+	for agent: RLAgent in agents:
+		if agent.done == false:
+			return false
+	return true
