@@ -88,3 +88,21 @@ func is_blocking(blocker: Robot, blocked: Robot) -> bool:
 	)
 	var result = space_state.intersect_ray(query)
 	return not result.is_empty() and result["collider"] == blocker
+
+## Return true if the first robot is facing the other within the specified angle.
+func is_facing(from: Robot, target: Robot, max_angle: float = 10.0) -> bool:
+	# Direction from the first object to the second
+	var direction: Vector3 = target.get_visual_transform().origin - \
+			from.get_visual_transform().origin
+	direction.y = 0.0
+	if direction.length_squared() < 0.000001:
+		return false
+	direction = direction.normalized()
+	
+	# Determine forward
+	var forward: Vector3 = -from.get_visual_transform().basis.orthonormalized().z
+	forward.y = 0.0
+	forward = forward.normalized()
+	
+	# Check second is within its angle
+	return forward.dot(direction) >= cos(deg_to_rad(max_angle))

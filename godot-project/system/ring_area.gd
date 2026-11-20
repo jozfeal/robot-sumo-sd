@@ -16,5 +16,4 @@ func _on_body_exited(body: Node3D) -> void:
 		StateFeedback.robot_lost(body.get_parent())
 		
 		if robots.size() <= 1:
-			#round_over.emit()
-			pass
+			round_over.emit()

@@ -34,9 +34,7 @@ func get_obs() -> Dictionary:
 			obs.append(state["right_wheel_speed"])
 		
 			# Add all other robot state values to observations
-			#obs.append(state["edge_distance"])
-			temp = state["relative_position"]
-			obs.append_array([temp.x, temp.y, temp.z])
+			obs.append(state["edge_distance"])
 			break
 	
 	# Add all other robots after
@@ -56,15 +54,22 @@ func get_reward() -> float:
 	# Rewards agent positively for being closer to the center than their opponent and vice versa
 	#var factor: float = 1.0
 	#if get_agent_state()["edge_distance"] < get_enemy_state()["edge_distance"]:
-		#factor = -1.0
-	#reward += factor * (1 - get_agent_state()["edge_distance"]) * 0.01
+	#	factor = -1.0
+	#reward += factor * (1 - get_agent_state()["edge_distance"]) * 2
 	
 	if last_distance_squared == 0:
 		last_distance_squared = get_enemy_state()["relative_position"].length_squared()
 	else:
-		var distance_sqaured = get_enemy_state()["relative_position"].length_squared()
-		reward += last_distance_squared - distance_sqaured * 0.01
-		last_distance_squared = distance_sqaured
+		var distance_squared = get_enemy_state()["relative_position"].length_squared()
+		reward += last_distance_squared - distance_squared * 2
+		last_distance_squared = distance_squared
+	
+	if StateFeedback.is_facing(controller.robot, get_enemy_state()["robot"]):
+		reward += 1
+		if get_agent_state()["left_wheel_speed"] > 0 and get_agent_state()["right_wheel_speed"] > 0:
+			reward += 0.5
+	else:
+		reward -= 1
 	
 	return reward
 
@@ -102,7 +107,7 @@ func calculate_rewards():
 func get_obs_space() -> Dictionary:
 	return {
 		"obs": {
-			"size": [16],
+			"size": [13],
 			"space": "box"
 		},
 	}
