@@ -18,12 +18,14 @@ var previous_enemy_distance: float
 
 func get_obs() -> Dictionary:
 	var obs: Array = []
+	
+	# Make the agent's own status first in the array
 	for i in range(1, feedback.size()):
 		var state: Dictionary = feedback[i]
 		var temp
 		
 		# Include agent's position and rotation values, along with its own movement
-		if i == 1:
+		if state["agent"] == controller.robot:
 			temp = state["position"]
 			obs.append_array([temp.x, temp.y, temp.z])
 			temp = state["rotation"]
@@ -31,6 +33,18 @@ func get_obs() -> Dictionary:
 			obs.append(state["left_wheel_speed"])
 			obs.append(state["right_wheel_speed"])
 		
+			# Add all other robot state values to observations
+			obs.append(state["edge_distance"])
+			temp = state["relative_position"]
+			obs.append_array([temp.x, temp.y, temp.z])
+			break
+	
+	# Add all other robots after
+	for i in range(1, feedback.size()):
+		var state: Dictionary = feedback[i]
+		var temp
+		if state["agent"] == controller.robot:
+			continue
 		# Add all other robot state values to observations
 		obs.append(state["edge_distance"])
 		temp = state["relative_position"]
@@ -63,7 +77,7 @@ func set_action(action) -> void:
 func _physics_process(_delta):
 	controller.receive_input(input_value)
 	
-	feedback = StateFeedback.get_feedback()
+	feedback = StateFeedback.get_feedback(controller.robot)
 	calculate_rewards()
 
 ## Adds / Substracts from [member reward] based on current feedback.
