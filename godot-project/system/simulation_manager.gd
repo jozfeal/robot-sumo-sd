@@ -37,22 +37,11 @@ func start_simulation() -> void:
 	# Helps prevent overfitting
 	var spawn_dist: float = randf_range(0.70, 0.55) * ring_radius
 	var random_spawn: Vector2 = Vector2.RIGHT.rotated(randf() * TAU) * spawn_dist
-	robots[0].global_position = Vector3(random_spawn.x, 0, random_spawn.y)
-	robots[1].global_position = Vector3(-random_spawn.x, 0 , -random_spawn.y)
+	robots[0].teleport(Vector3(random_spawn.x, 0, random_spawn.y))
+	robots[1].teleport(Vector3(-random_spawn.x, 0 , -random_spawn.y))
 	# Aligns orientation so robot looks at center.
 	robots[0].look_at(Vector3.ZERO)
-	robots[0].rotate_y(deg_to_rad(180))
 	robots[1].look_at(Vector3.ZERO)
-	robots[1].rotate_y(deg_to_rad(180))
-	
-	robots[0].engine_force = 0
-	robots[0].steering = 0
-	robots[0].linear_velocity = Vector3.ZERO
-	robots[0].angular_velocity = Vector3.ZERO
-	robots[1].engine_force = 0
-	robots[1].steering = 0
-	robots[1].linear_velocity = Vector3.ZERO
-	robots[1].angular_velocity = Vector3.ZERO
 	
 	# Initialize StateFeedback values
 	StateFeedback.assign_robots(robots, robots.find(agent_robot))
@@ -83,6 +72,9 @@ func _wait_for_sync():
 
 
 func _on_ring_area_round_over() -> void:
+	if sync.control_mode == Sync.ControlModes.HUMAN:
+		start_simulation()
+	
 	if agent.done:
 		return
 	

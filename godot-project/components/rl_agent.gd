@@ -33,8 +33,6 @@ func get_obs() -> Dictionary:
 		obs.append(state["edge_distance"])
 		temp = state["relative_position"]
 		obs.append_array([temp.x, temp.y, temp.z])
-		obs.append(state["engine_force"])
-		obs.append(state["steering"])
 	
 	return {"obs":obs}
 
@@ -44,12 +42,12 @@ func get_reward() -> float:
 func get_action_space() -> Dictionary:
 	return {
 		# Discrete action space of 3 for backward, forward, or none
-		"throttle" : {
+		"left_wheel" : {
 			"size": 3,
 			"action_type": "discrete"
 		},
 		# Discrete action space of 3 for left, right, or none
-		"steering" : {
+		"right_wheel" : {
 			"size": 3,
 			"action_type": "discrete"
 		}
@@ -57,8 +55,8 @@ func get_action_space() -> Dictionary:
 
 func set_action(action) -> void:
 	# Converts the actions into a choice of [-1, 0, 1] for throttle and steer
-	input_value.x = int(action["throttle"]) - 1
-	input_value.y = int(action["steering"]) - 1
+	input_value.x = int(action["left_wheel"]) - 1
+	input_value.y = int(action["right_wheel"]) - 1
 
 func _physics_process(_delta):
 	controller.receive_input(input_value)
@@ -80,7 +78,7 @@ func calculate_rewards():
 func get_obs_space() -> Dictionary:
 	return {
 		"obs": {
-			"size": [18],
+			"size": [14],
 			"space": "box"
 		},
 	}

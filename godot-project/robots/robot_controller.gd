@@ -15,16 +15,16 @@ enum InputMode {
 @export var input_mode: InputMode
 ## Must be defined in Input Map.
 ## Only in effect if [member input_mode] is set to [enum InputMode.USER].
-@export var input_forward: String = "forward"
+@export var input_left_fwd: String = "left_fwd"
 ## Must be defined in Input Map.
 ## Only in effect if [member input_mode] is set to [enum InputMode.USER].
-@export var input_backward: String = "backward"
+@export var input_left_bwd: String = "left_bwd"
 ## Must be defined in Input Map.
 ## Only in effect if [member input_mode] is set to [enum InputMode.USER].
-@export var input_left: String = "left"
+@export var input_right_fwd: String = "right_fwd"
 ## Must be defined in Input Map.
 ## Only in effect if [member input_mode] is set to [enum InputMode.USER].
-@export var input_right: String = "right"
+@export var input_right_bwd: String = "right_bwd"
 
 @export_group("Nodes")
 ## Robot that this controller is assigned to.
@@ -32,7 +32,7 @@ enum InputMode {
 @export_group("")
 
 # Current input values to process in _physics_process.
-# X corresponds to steering, Y corresponds to engine throttle.
+# X corresponds to left wheel throttle, Y corresponds to right wheel throttle.
 var _input: Vector2 = Vector2.ZERO
 
 ## Maximum degrees in degrees the steering wheels are able to turn.
@@ -42,6 +42,9 @@ var _input: Vector2 = Vector2.ZERO
 ## How much force is applied by accelerating.
 @export var engine_power: float = 300
 
+## Maximum force a wheel can output.
+@export var max_wheel_force: float = 2.0
+
 ## Sets [member input] by clamping [param input_value] to ensure it can be used
 ## in [method physics_process].
 func receive_input(input_value: Vector2) -> void:
@@ -50,17 +53,16 @@ func receive_input(input_value: Vector2) -> void:
 		_input = input_value.clamp(-Vector2.ONE, Vector2.ONE)
 
 func _ready() -> void:
-	assert(InputMap.has_action(input_forward), "%s is not defined in InputMap." % input_forward)
-	assert(InputMap.has_action(input_backward), "%s is not defined in InputMap." % input_backward)
-	assert(InputMap.has_action(input_left), "%s is not defined in InputMap." % input_left)
-	assert(InputMap.has_action(input_right), "%s is not defined in InputMap." % input_right)
+	if input_mode == InputMode.USER:
+		assert(InputMap.has_action(input_left_fwd), "%s is not defined in InputMap." % input_left_fwd)
+		assert(InputMap.has_action(input_left_bwd), "%s is not defined in InputMap." % input_left_bwd)
+		assert(InputMap.has_action(input_right_fwd), "%s is not defined in InputMap." % input_right_fwd)
+		assert(InputMap.has_action(input_right_bwd), "%s is not defined in InputMap." % input_right_bwd)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Obtain input vector from the user input axises
 	if input_mode == InputMode.USER:
-		_input = Vector2(Input.get_axis(input_right, input_left), \
-				Input.get_axis(input_backward, input_forward))
+		_input = Vector2(Input.get_axis(input_left_fwd, input_left_bwd), \
+				Input.get_axis(input_right_fwd, input_right_bwd))
 	
-	var max_rads: float = deg_to_rad(max_steer)
-	robot.steering = move_toward(robot.steering, _input.x * max_rads, delta * turn_speed)
-	robot.engine_force = _input.y * engine_power
+	robot.set_drive(_input.x, _input.y)
