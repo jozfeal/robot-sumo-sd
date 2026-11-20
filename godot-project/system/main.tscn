@@ -40,7 +40,7 @@ outline_size = 20
 
 [node name="SimulationManager" type="Node" parent="." unique_id=1753323360 node_paths=PackedStringArray("agents", "agent_robot", "robot_holder", "ring_shape", "round_timer", "sync")]
 script = ExtResource("1_tuma4")
-agents = [NodePath("../RLAgent")]
+agents = [NodePath("../BlueAgent")]
 agent_robot = NodePath("../Robots/BlueRobot")
 robot_holder = NodePath("../Robots")
 ring_shape = NodePath("../RingArea/CollisionShape3D")
@@ -123,6 +123,7 @@ metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
 [node name="RedController" type="Node" parent="." unique_id=1510759221 node_paths=PackedStringArray("robot")]
 script = ExtResource("5_tuma4")
+input_mode = 1
 input_left_fwd = "p1_left_fwd"
 input_left_bwd = "p1_left_bwd"
 input_right_fwd = "p1_right_fwd"
@@ -131,9 +132,14 @@ robot = NodePath("../Robots/RedRobot")
 engine_power = 100.0
 metadata/_custom_type_script = "uid://x6xqirqhn2qu"
 
-[node name="RLAgent" type="Node3D" parent="." unique_id=386915892 node_paths=PackedStringArray("controller")]
+[node name="BlueAgent" type="Node3D" parent="." unique_id=386915892 node_paths=PackedStringArray("controller")]
 script = ExtResource("6_kmnl7")
 controller = NodePath("../BlueController")
+metadata/_custom_type_script = "uid://dph5bymoc6lx0"
+
+[node name="RedAgent" type="Node3D" parent="." unique_id=497513183 node_paths=PackedStringArray("controller")]
+script = ExtResource("6_kmnl7")
+controller = NodePath("../RedController")
 metadata/_custom_type_script = "uid://dph5bymoc6lx0"
 
 [node name="Sync" type="Node" parent="." unique_id=1368255483]
