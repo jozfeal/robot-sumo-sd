@@ -25,7 +25,7 @@ func get_obs() -> Dictionary:
 		var temp
 		
 		# Include agent's position and rotation values, along with its own movement
-		if state["agent"] == controller.robot:
+		if state["robot"] == controller.robot:
 			temp = state["position"]
 			obs.append_array([temp.x, temp.y, temp.z])
 			temp = state["rotation"]
@@ -43,7 +43,7 @@ func get_obs() -> Dictionary:
 	for i in range(1, feedback.size()):
 		var state: Dictionary = feedback[i]
 		var temp
-		if state["agent"] == controller.robot:
+		if state["robot"] == controller.robot:
 			continue
 		# Add all other robot state values to observations
 		obs.append(state["edge_distance"])
