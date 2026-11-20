@@ -47,11 +47,17 @@ func get_feedback() -> Array:
 		var state: Dictionary
 		# Get all the properties from the robot
 		state["active"] = _robot_status[robot]
-		state["edge_distance"] = (ring_radius - robot.global_position.length()) / ring_radius
-		state["position"] = robot.global_position
-		state["relative_position"] = robot.global_position - agent.global_position
-		state["rotation"] = robot.rotation
-		state["relative_rotation"] = robot.rotation - agent.rotation
+		state["edge_distance"] = (ring_radius - robot.get_visual_transform().origin.length()) / ring_radius
+		state["position"] = robot.get_visual_transform().origin
+		state["rotation"] = robot.get_visual_transform().basis.get_euler()
+		state["relative_rotation"] = robot.get_visual_transform().basis.get_euler() \
+				- agent.get_visual_transform().basis.get_euler()
+		state["relative_position"] = robot.get_visual_transform().origin\
+			 	- agent.get_visual_transform().origin
+		state["linear_velocity"] = robot.get_visual_linear_velocity()
+		state["angular_velocity"] = robot.get_visual_angular_velocity()
+		state["left_wheel_speed"] = robot.get_left_wheel_speed()
+		state["right_wheel_speed"] = robot.get_right_wheel_speed()
 		feedback.append(state)
 	return feedback
 
