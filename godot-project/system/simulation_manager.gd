@@ -43,6 +43,9 @@ func start_simulation() -> void:
 	robots[0].look_at(Vector3.ZERO)
 	robots[1].look_at(Vector3.ZERO)
 	
+	for agent: RLAgent in agents:
+		agent.last_distance_squared = 0
+	
 	# Initialize StateFeedback values
 	StateFeedback.assign_robots(robots)
 	StateFeedback.ring_radius = ring_radius
@@ -75,16 +78,16 @@ func _on_ring_area_round_over() -> void:
 	
 	# Gives +100 reward to agents who are active at round end, and -100 otherwise
 	# Results in -100 rewards for all agents on draw
-	for agent: RLAgent in agents:
-		var feedback: Array = StateFeedback.get_feedback(agent.controller.robot)
-		for i in range(1, feedback.size()):
-			var state: Dictionary = feedback[i]
-			if state["robot"] == agent.controller.robot:
-				if state["active"]:
-					agent.reward += 100
-				else:
-					agent.reward -= 100
-				break
+	#for agent: RLAgent in agents:
+		#var feedback: Array = StateFeedback.get_feedback(agent.controller.robot)
+		#for i in range(1, feedback.size()):
+			#var state: Dictionary = feedback[i]
+			#if state["robot"] == agent.controller.robot:
+				#if state["active"]:
+					#agent.reward += 100
+				#else:
+					#agent.reward -= 100
+				#break
 
 func _physics_process(_delta: float) -> void:
 	# Ensures the agents gets terminal rewards before restarting simulation

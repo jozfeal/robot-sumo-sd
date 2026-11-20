@@ -40,7 +40,7 @@ outline_size = 20
 
 [node name="SimulationManager" type="Node" parent="." unique_id=1753323360 node_paths=PackedStringArray("agents", "agent_robot", "robot_holder", "ring_shape", "round_timer", "sync")]
 script = ExtResource("1_tuma4")
-agents = [NodePath("../BlueAgent")]
+agents = [NodePath("../BlueAgent"), NodePath("../RedAgent")]
 agent_robot = NodePath("../Robots/BlueRobot")
 robot_holder = NodePath("../Robots")
 ring_shape = NodePath("../RingArea/CollisionShape3D")

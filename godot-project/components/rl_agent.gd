@@ -13,6 +13,9 @@ var input_value: Vector2
 ## Feedback from last frame.
 var feedback: Array
 
+## Distance to opponent in the last step.
+var last_distance_squared: float = 0
+
 func get_obs() -> Dictionary:
 	var obs: Array = []
 	
@@ -31,7 +34,7 @@ func get_obs() -> Dictionary:
 			obs.append(state["right_wheel_speed"])
 		
 			# Add all other robot state values to observations
-			obs.append(state["edge_distance"])
+			#obs.append(state["edge_distance"])
 			temp = state["relative_position"]
 			obs.append_array([temp.x, temp.y, temp.z])
 			break
@@ -50,6 +53,19 @@ func get_obs() -> Dictionary:
 	return {"obs":obs}
 
 func get_reward() -> float:
+	# Rewards agent positively for being closer to the center than their opponent and vice versa
+	#var factor: float = 1.0
+	#if get_agent_state()["edge_distance"] < get_enemy_state()["edge_distance"]:
+		#factor = -1.0
+	#reward += factor * (1 - get_agent_state()["edge_distance"]) * 0.01
+	
+	if last_distance_squared == 0:
+		last_distance_squared = get_enemy_state()["relative_position"].length_squared()
+	else:
+		var distance_sqaured = get_enemy_state()["relative_position"].length_squared()
+		reward += last_distance_squared - distance_sqaured * 0.01
+		last_distance_squared = distance_sqaured
+	
 	return reward
 
 func get_action_space() -> Dictionary:
@@ -90,3 +106,19 @@ func get_obs_space() -> Dictionary:
 			"space": "box"
 		},
 	}
+
+## Returns the opposing robot state in a 2 robot simulation.
+func get_enemy_state() -> Dictionary:
+	for i in range(1, feedback.size()):
+		var state: Dictionary = feedback[i]
+		if state["robot"] != controller.robot:
+			return state
+	return { }
+
+## Returns the agent robot state in a 2 robot simulation.
+func get_agent_state() -> Dictionary:
+	for i in range(1, feedback.size()):
+		var state: Dictionary = feedback[i]
+		if state["robot"] == controller.robot:
+			return state
+	return { }
